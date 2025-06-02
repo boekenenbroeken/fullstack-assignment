@@ -1,0 +1,25 @@
+model Season {
+  id         Int     @id @default(autoincrement())
+  year       Int     @unique
+  champion   Driver  @relation("SeasonChampion", fields: [championId], references: [id])
+  championId Int
+  races      Race[]
+}
+
+model Race {
+  id        Int     @id @default(autoincrement())
+  name      String
+  round     Int
+  winner    Driver  @relation("RaceWinner", fields: [winnerId], references: [id])
+  winnerId  Int
+  season    Season  @relation(fields: [seasonId], references: [id])
+  seasonId  Int
+}
+
+model Driver {
+  id             Int     @id @default(autoincrement())
+  name           String
+  nationality    String
+  raceWins       Race[]    @relation("RaceWinner")
+  championships  Season[]  @relation("SeasonChampion")
+}

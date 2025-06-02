@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:15
+    container_name: f1-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: f1
+    ports:
+      - '5432:5432'
+    volumes:
+      - f1-data:/var/lib/postgresql/data
+
+volumes:
+  f1-data:
