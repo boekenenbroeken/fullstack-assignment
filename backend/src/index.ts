@@ -32,6 +32,11 @@ app.get('/', (_req, res) => {
   res.send('F1 Champions API is running 🚀');
 });
 
+app.get('/openapi.json', (_req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
 app.use('/api', f1Routes);
 
 app.listen(port, () => {
