@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
-import f1Routes from './routes/f1Routes.js'; // ✅ must include `.js`
+import f1Routes from './routes/f1Routes';
 
 dotenv.config();
 
