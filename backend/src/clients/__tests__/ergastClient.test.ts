@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { fetchSeasons, fetchSeasonChampion, fetchRaceWinners } from '../ergastClient';
 import { api } from '../api';
+import { redis } from '../../lib/redis';
 import {
   mockSeasonsResponse,
   mockChampionResponse,
@@ -10,8 +11,10 @@ import {
 
 vi.mock('../api');
 
-beforeEach(() => {
+beforeEach(async () => {
   vi.clearAllMocks();
+
+  await redis.flushall();
 });
 
 const mockGet = api.get as unknown as ReturnType<typeof vi.fn>;
