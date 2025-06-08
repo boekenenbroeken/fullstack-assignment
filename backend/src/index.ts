@@ -39,6 +39,10 @@ app.get('/openapi.json', (_req, res) => {
 
 app.use('/api', f1Routes);
 
+app.get('/health', (_req, res) => {
+  res.sendStatus(200);
+});
+
 app.listen(port, () => {
   console.log(`Server is listening on http://localhost:${port}`);
 });

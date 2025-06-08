@@ -1,4 +1,5 @@
 version: '3.9'
+
 services:
   db:
     image: postgres:15
@@ -12,6 +13,47 @@ services:
       - '5432:5432'
     volumes:
       - f1-data:/var/lib/postgresql/data
+
+    # ← add this block
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    container_name: f1-redis
+    restart: always
+    ports:
+      - '6380:6379'
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: f1-backend
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/f1
+      REDIS_URL: redis://f1-redis:6379
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   f1-data:
