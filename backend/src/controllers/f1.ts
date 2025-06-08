@@ -4,8 +4,23 @@ import { prisma } from '../lib/prisma';
 import { syncSeason } from '../services/syncService';
 
 /**
- * GET /api/champions?years=2020,2021
- * Fetches world champions for specified seasons
+ * @openapi
+ * /api/champions:
+ *   get:
+ *     summary: Get world champions for specified seasons
+ *     description: Returns a list of F1 world champions for the provided years. If no years are specified, defaults to 2020–2022.
+ *     parameters:
+ *       - in: query
+ *         name: years
+ *         schema:
+ *           type: string
+ *           example: 2020,2021
+ *         description: Comma-separated list of years
+ *     responses:
+ *       200:
+ *         description: List of champion data
+ *       500:
+ *         description: Server error
  */
 export const getChampions = async (req: Request, res: Response) => {
   try {
@@ -21,8 +36,16 @@ export const getChampions = async (req: Request, res: Response) => {
 };
 
 /**
- * GET /api/test-db
- * Verifies database connectivity
+ * @openapi
+ * /api/test-db:
+ *   get:
+ *     summary: Test database connectivity
+ *     description: Returns a list of seasons from the database to verify DB connection.
+ *     responses:
+ *       200:
+ *         description: List of seasons from the database
+ *       500:
+ *         description: Database connection failed
  */
 export const testDB = async (_req: Request, res: Response) => {
   try {
@@ -35,8 +58,34 @@ export const testDB = async (_req: Request, res: Response) => {
 };
 
 /**
- * GET /api/seed/:year
- * Seeds race and champion data for a given year
+ * @openapi
+ * /api/seed/{year}:
+ *   get:
+ *     summary: Seed season data
+ *     description: Seeds race and champion data for a given year.
+ *     parameters:
+ *       - name: year
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The season year to seed
+ *     responses:
+ *       200:
+ *         description: Successfully seeded the season
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 year:
+ *                   type: integer
+ *       400:
+ *         description: Invalid year format
+ *       500:
+ *         description: Seeding failed
  */
 export const seedSeason = async (req: Request, res: Response) => {
   const year = Number(req.params.year);
