@@ -20,3 +20,6 @@ Thumbs.db
 
 # Prisma
 prisma/dev.db
+
+# Test artifacts
+coverage/

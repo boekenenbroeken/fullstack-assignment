@@ -1,25 +1,39 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Driver {
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  nationality String
+
+  racesWon Race[] @relation("RaceWinners")
+
+  championships Season[] @relation("SeasonChampions")
+}
+
 model Season {
-  id         Int     @id @default(autoincrement())
-  year       Int     @unique
-  champion   Driver  @relation("SeasonChampion", fields: [championId], references: [id])
+  id         Int    @id @default(autoincrement())
+  year       Int    @unique
+  champion   Driver @relation("SeasonChampions", fields: [championId], references: [id])
   championId Int
   races      Race[]
 }
 
 model Race {
-  id        Int     @id @default(autoincrement())
-  name      String
-  round     Int
-  winner    Driver  @relation("RaceWinner", fields: [winnerId], references: [id])
-  winnerId  Int
-  season    Season  @relation(fields: [seasonId], references: [id])
-  seasonId  Int
-}
+  id       Int      @id @default(autoincrement())
+  name     String
+  round    Int
+  date     DateTime
+  circuit  String
+  season   Season   @relation(fields: [seasonId], references: [id])
+  seasonId Int
 
-model Driver {
-  id             Int     @id @default(autoincrement())
-  name           String
-  nationality    String
-  raceWins       Race[]    @relation("RaceWinner")
-  championships  Season[]  @relation("SeasonChampion")
+  winner   Driver @relation("RaceWinners", fields: [winnerId], references: [id])
+  winnerId Int
 }

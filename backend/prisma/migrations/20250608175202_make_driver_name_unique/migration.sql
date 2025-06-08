@@ -30,6 +30,9 @@ CREATE TABLE "Driver" (
 -- CreateIndex
 CREATE UNIQUE INDEX "Season_year_key" ON "Season"("year");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Driver_name_key" ON "Driver"("name");
+
 -- AddForeignKey
 ALTER TABLE "Season" ADD CONSTRAINT "Season_championId_fkey" FOREIGN KEY ("championId") REFERENCES "Driver"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
