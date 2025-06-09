@@ -1,4 +1,5 @@
 import { fetchSeasons, fetchSeasonChampion, fetchRaceWinners } from '../clients/ergastClient';
+import { prisma } from '../lib/prisma';
 
 import { championsMapper, driverMapper, raceWinnersMapper } from '../mappers';
 
@@ -20,14 +21,16 @@ export const getSeasonChampion = async (year: string): Promise<MappedDriver | nu
   return driverMapper(list[0].DriverStandings[0].Driver);
 };
 
-export const getChampionsForSeasons = async (years: string[]): Promise<Champion[]> => {
-  const results = await Promise.allSettled(years.map(fetchSeasonChampion));
+export const getAllChampions = async () => {
+  const seasons = await prisma.season.findMany({
+    include: { champion: true },
+    orderBy: { year: 'asc' },
+  });
 
-  const validResponses = results
-    .filter((r): r is PromiseFulfilledResult<any> => r.status === 'fulfilled')
-    .map((r) => r.value);
-
-  return championsMapper(validResponses);
+  return seasons.map((s) => ({
+    year: s.year.toString(),
+    driver: s.champion.name.split(' ')[0], // or use full name
+  }));
 };
 
 export const getRaceWinners = async (year: string): Promise<MappedRace[]> => {

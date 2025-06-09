@@ -1,8 +1,13 @@
-#!/usr/bin/env sh
+#!/bin/sh
+
+# Exit immediately if a command exits with a non-zero status
 set -e
 
-# run prisma migrations (in production mode)
+echo "📦 Running Prisma migrations..."
 npx prisma migrate deploy
 
-# then start the server
-npm run start
+echo "🌱 Running seed script..."
+npm run seed
+
+echo "🚀 Starting the server..."
+exec "$@"

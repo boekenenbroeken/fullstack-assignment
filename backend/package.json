@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon --watch src --ext ts --exec \"node --import ./register-loader.mjs src/index.ts\"",
     "start": "node --import ./register-loader.mjs src/index.ts",
+    "seed": "node --import ./register-loader.mjs seed.ts",
     "build": "tsc",
     "lint": "eslint .",
     "format": "prettier --write .",

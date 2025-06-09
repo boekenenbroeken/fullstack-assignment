@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getChampionsForSeasons } from '../services/f1Service';
+import { getAllChampions } from '../services/f1Service';
 import { prisma } from '../lib/prisma';
 import { syncSeason } from '../services/syncService';
 
@@ -22,12 +22,9 @@ import { syncSeason } from '../services/syncService';
  *       500:
  *         description: Server error
  */
-export const getChampions = async (req: Request, res: Response) => {
+export const getChampions = async (_req: Request, res: Response) => {
   try {
-    const { years } = req.query;
-    const yearList = typeof years === 'string' ? years.split(',') : ['2020', '2021', '2022'];
-
-    const data = await getChampionsForSeasons(yearList);
+    const data = await getAllChampions();
     res.json(data);
   } catch (err) {
     console.error('[getChampions] Failed:', err);

@@ -1,35 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import ChampionList from './components/ChampionList';
+import RaceWinners from './components/RaceWinners';
+import { fetchChampions } from './api/api';
+export default function App() {
+  const [season, setSeason] = useState<string>();
+  const [championId, setChampionId] = useState<string>();
 
-function App() {
-  const [count, setCount] = useState(0)
+  // When a season is selected, fetch champions again to get driverId
+  const handleSelect = async (yr: string) => {
+    setSeason(yr);
+    const champs = await fetchChampions(yr);  // reuse fetch from api
+    setChampionId(champs[0].driver.id);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <h1>F1 World Champions</h1>
+      <ChampionList onSelect={handleSelect} />
+      {/* {season && championId && <RaceWinners season={season} championId={championId} />} */}
+    </div>
+  );
 }
-
-export default App

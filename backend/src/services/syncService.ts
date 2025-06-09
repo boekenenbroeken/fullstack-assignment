@@ -3,14 +3,17 @@ import { getSeasonChampion, getRaceWinners } from './f1Service';
 
 export const syncSeason = async (year: number) => {
   const existing = await prisma.season.findUnique({ where: { year } });
-
-  if (existing) return;
+  if (existing) {
+    console.log(`⚠️ Season ${year} already exists, skipping.`);
+    return;
+  }
 
   const champion = await getSeasonChampion(String(year));
   const races = await getRaceWinners(String(year));
 
   if (!champion || races.length === 0) {
-    throw new Error(`No data available for season ${year}`);
+    console.warn(`⚠️ Incomplete data for ${year}, skipping.`);
+    return;
   }
 
   const championDriver = await prisma.driver.upsert({
@@ -51,5 +54,16 @@ export const syncSeason = async (year: number) => {
     });
   }
 
-  console.log(`✅ Season ${year} synced successfully.`);
+  console.log(`✅ Synced season ${year}`);
+};
+
+export const syncAllSeasons = async () => {
+  const currentYear = new Date().getFullYear();
+  for (let year = 2005; year <= currentYear; year++) {
+    try {
+      await syncSeason(year);
+    } catch (err) {
+      console.error(`❌ Failed to sync season ${year}:`, err);
+    }
+  }
 };
