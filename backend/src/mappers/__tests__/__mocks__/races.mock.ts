@@ -1,13 +1,9 @@
-import { Race } from '../../../types/ergast';
+import { RawRace } from '../../../types/ergast';
 
-export const fullRaceData: Race[] = [
+export const fullRaceData: RawRace[] = [
   {
     raceName: 'Australian Grand Prix',
-    date: '2022-03-20',
-    round: '1',
-    Circuit: {
-      circuitName: 'Albert Park Grand Prix Circuit',
-    },
+    round: 1,
     Results: [
       {
         Driver: {
@@ -21,24 +17,18 @@ export const fullRaceData: Race[] = [
   },
 ];
 
-export const missingDriverData: Race[] = [
+export const missingDriverData: RawRace[] = [
   {
     raceName: 'Bahrain Grand Prix',
-    date: '2022-03-27',
-    round: '2',
-    Circuit: {
-      circuitName: 'Bahrain International Circuit',
-    },
+    round: 2,
     Results: [{} as any],
   },
 ];
 
-export const missingCircuitNameData: Race[] = [
+export const missingCircuitNameData: RawRace[] = [
   {
     raceName: 'Saudi Arabian Grand Prix',
-    date: '2022-04-03',
-    round: '3',
-    Circuit: {} as any,
+    round: 3,
     Results: [
       {
         Driver: {
@@ -52,12 +42,10 @@ export const missingCircuitNameData: Race[] = [
   },
 ];
 
-export const undefinedCircuitData: Race[] = [
+export const undefinedCircuitData: RawRace[] = [
   {
     raceName: 'Imola Grand Prix',
-    date: '2022-04-10',
-    round: '4',
-    Circuit: undefined as any,
+    round: 4,
     Results: [
       {
         Driver: {

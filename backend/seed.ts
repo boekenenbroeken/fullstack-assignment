@@ -1,14 +1,13 @@
 import { syncSeason } from './src/services/syncService';
 import { prisma } from './src/lib/prisma';
 
-const startYear = 2005;
-
-const endYear = new Date().getFullYear();
+const START_YEAR = 2005;
+const END_YEAR = new Date().getFullYear();
 
 const main = async () => {
-  console.log(`🚀 Syncing seasons from ${startYear} to ${endYear}...`);
+  console.log(`🚀 Syncing seasons from ${START_YEAR} to ${END_YEAR}...`);
 
-  for (let year = startYear; year <= endYear; year++) {
+  for (let year = START_YEAR; year <= END_YEAR; year++) {
     console.log(`📦 Syncing ${year}...`);
     await syncSeason(year);
   }

@@ -1,40 +1,74 @@
-import { fetchSeasons, fetchSeasonChampion, fetchRaceWinners } from '../clients/ergastClient';
+import { fetchSeasonChampion, fetchRaces } from '../clients/ergastClient';
 import { prisma } from '../lib/prisma';
 
-import { championsMapper, driverMapper, raceWinnersMapper } from '../mappers';
+import { championMapper, racesMapper } from '../mappers';
 
-import { Champion, MappedDriver, MappedRace } from '../types/ergast';
+import { Champion, Race } from '../types/ergast';
 
-export const getSeasons = async (): Promise<{ season: string; url: string }[]> => {
-  const data = await fetchSeasons();
-  return data.MRData.SeasonTable.Seasons;
-};
-
-export const getSeasonChampion = async (year: string): Promise<MappedDriver | null> => {
+export const getSeasonChampion = async (year: number): Promise<Champion> => {
   const data = await fetchSeasonChampion(year);
-  const list = data.MRData.StandingsTable.StandingsLists;
 
-  if (!list || list.length === 0) {
-    throw new Error(`No standings found for year ${year}`);
-  }
-
-  return driverMapper(list[0].DriverStandings[0].Driver);
+  return championMapper(data);
 };
 
 export const getAllChampions = async () => {
-  const seasons = await prisma.season.findMany({
-    include: { champion: true },
-    orderBy: { year: 'asc' },
+  const data = await prisma.driverSeason.findMany({
+    include: {
+      season: true,
+      driver: true,
+      team: true,
+    },
+    orderBy: { season: { year: 'asc' } },
   });
 
-  return seasons.map((s) => ({
-    year: s.year.toString(),
-    driver: s.champion.name.split(' ')[0], // or use full name
+  return data.map((item) => ({
+    season: item.season.year.toString(),
+    driver: item.driver,
+    team: item.team,
   }));
 };
 
-export const getRaceWinners = async (year: string): Promise<MappedRace[]> => {
-  const data = await fetchRaceWinners(year);
+export const getRaces = async (year: number): Promise<Race[]> => {
+  const data = await fetchRaces(year);
 
-  return raceWinnersMapper(data.MRData.RaceTable.Races);
+  return racesMapper(data.MRData.RaceTable.Races);
+};
+
+export const getAllRaces = async (year: number) => {
+  const season = await prisma.season.findUnique({
+    where: { year },
+    include: {
+      races: {
+        include: {
+          winner: {
+            include: {
+              driverSeasons: {
+                where: { season: { year } },
+                include: {
+                  team: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!season) {
+    // TODO: fix
+    throw new Error(`Season ${year} not found`);
+  }
+
+  return season.races.map(({ id, name, round, winner }) => ({
+    id,
+    name,
+    round,
+    winner: {
+      id: winner.id,
+      name: winner.name,
+      nationality: winner.nationality,
+    },
+    team: winner.driverSeasons[0].team,
+  }));
 };

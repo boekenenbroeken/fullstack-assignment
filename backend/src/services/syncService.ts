@@ -1,69 +1,62 @@
 import { prisma } from '../lib/prisma';
-import { getSeasonChampion, getRaceWinners } from './f1Service';
+import { getRaces, getSeasonChampion } from './f1Service';
 
 export const syncSeason = async (year: number) => {
-  const existing = await prisma.season.findUnique({ where: { year } });
-  if (existing) {
-    console.log(`⚠️ Season ${year} already exists, skipping.`);
-    return;
-  }
+  const champion = await getSeasonChampion(year);
+  const races = await getRaces(year);
 
-  const champion = await getSeasonChampion(String(year));
-  const races = await getRaceWinners(String(year));
-
-  if (!champion || races.length === 0) {
+  if (!champion || !races) {
     console.warn(`⚠️ Incomplete data for ${year}, skipping.`);
     return;
   }
 
-  const championDriver = await prisma.driver.upsert({
-    where: { name: champion.name },
+  await prisma.driver.upsert({
+    where: { id: champion.driver.id },
     update: {},
     create: {
-      name: champion.name,
-      nationality: champion.nationality,
+      id: champion.driver.id,
+      name: champion.driver.name,
+      nationality: champion.driver.nationality,
     },
   });
 
-  const season = await prisma.season.create({
-    data: {
+  const season = await prisma.season.upsert({
+    where: { year },
+    update: {},
+    create: {
       year,
-      championId: championDriver.id,
+      champion: { connect: { id: champion.driver.id } },
     },
   });
 
-  for (const race of races) {
-    const winner = await prisma.driver.upsert({
-      where: { name: race.winner.name },
-      update: {},
-      create: {
-        name: race.winner.name,
-        nationality: race.winner.nationality,
-      },
-    });
+  await prisma.driver.createMany({
+    data: races.map((race) => race.winner),
+    skipDuplicates: true,
+  });
 
-    await prisma.race.create({
-      data: {
-        name: race.raceName,
-        round: parseInt(race.round),
-        date: new Date(race.date),
-        circuit: race.circuitName,
-        seasonId: season.id,
-        winnerId: winner.id,
-      },
-    });
-  }
+  await prisma.team.createMany({
+    data: races.map((race) => race.team),
+    skipDuplicates: true,
+  });
+
+  await prisma.driverSeason.createMany({
+    data: races.map((race) => ({
+      driverId: race.winner.id,
+      teamId: race.team.id,
+      seasonId: season.id,
+    })),
+    skipDuplicates: true,
+  });
+
+  await prisma.race.createMany({
+    data: races.map((race) => ({
+      name: race.name,
+      round: race.round,
+      seasonId: season.id,
+      winnerId: race.winner.id,
+    })),
+    skipDuplicates: true,
+  });
 
   console.log(`✅ Synced season ${year}`);
-};
-
-export const syncAllSeasons = async () => {
-  const currentYear = new Date().getFullYear();
-  for (let year = 2005; year <= currentYear; year++) {
-    try {
-      await syncSeason(year);
-    } catch (err) {
-      console.error(`❌ Failed to sync season ${year}:`, err);
-    }
-  }
 };

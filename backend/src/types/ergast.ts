@@ -5,36 +5,42 @@ export type RawDriver = {
   nationality: string;
 };
 
-export type MappedDriver = {
+export type Driver = {
   id: string;
   name: string;
   nationality: string;
 };
 
-export type Champion = {
-  season: string;
-  driver: MappedDriver;
-  constructorName: string;
+export type RawTeam = {
+  constructorId: string;
+  name: string;
 };
 
-export type Race = {
+export type Team = {
+  id: string;
+  name: string;
+};
+
+export type Champion = {
+  season: string;
+  driver: Driver;
+  team: Team;
+};
+
+export type RawRace = {
   raceName: string;
-  date: string;
   round: string;
-  Circuit: {
-    circuitName: string;
-  };
   Results: {
     Driver: RawDriver;
+    Constructor: RawTeam;
   }[];
 };
 
-export type MappedRace = {
-  raceName: string;
-  date: string;
+export type Race = {
+  name: string;
   round: string;
-  circuitName: string;
-  winner: MappedDriver;
+  winner: Driver;
+  team: Team;
 };
 
 export type ChampionApiResponse = {
@@ -44,19 +50,17 @@ export type ChampionApiResponse = {
       StandingsLists: {
         DriverStandings: {
           Driver: RawDriver;
-          Constructors: {
-            name: string;
-          }[];
+          Constructors: RawTeam[];
         }[];
       }[];
     };
   };
 };
 
-export type RaceWinnersApiResponse = {
+export type RacesApiResponse = {
   MRData: {
     RaceTable: {
-      Races: Race[];
+      Races: RawRace[];
     };
   };
 };

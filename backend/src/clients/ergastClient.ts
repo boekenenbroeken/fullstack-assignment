@@ -1,7 +1,7 @@
 import { api } from './api';
 import { redis } from '../lib/redis';
 
-import { ChampionApiResponse, RaceWinnersApiResponse } from '../types/ergast';
+import { ChampionApiResponse, RacesApiResponse } from '../types/ergast';
 
 export const fetchSeasons = async (): Promise<any> => {
   const cacheKey = 'seasons';
@@ -20,26 +20,26 @@ export const fetchSeasons = async (): Promise<any> => {
   }
 };
 
-export const fetchSeasonChampion = async (year: string): Promise<ChampionApiResponse> => {
+export const fetchSeasonChampion = async (year: number): Promise<ChampionApiResponse> => {
   const cacheKey = `seasonChampion:${year}`;
   const cached = await redis.get(cacheKey);
 
   if (cached) {
-    return JSON.parse(cached);
+    return JSON.parse(cached) as ChampionApiResponse;
   }
 
   try {
     const { data } = await api.get(`/${year}/driverStandings/1.json`);
     await redis.set(cacheKey, JSON.stringify(data), 'EX', 60 * 60); // cache for 1 hour
-    return data;
+    return data as ChampionApiResponse;
   } catch (error) {
     console.error(`❌ [fetchSeasonChampion] Error fetching champion for year ${year}:`, error);
     throw new Error(`❌ Failed to fetch champion for year ${year}`);
   }
 };
 
-export const fetchRaceWinners = async (year: string): Promise<RaceWinnersApiResponse> => {
-  const cacheKey = `raceWinners:${year}`;
+export const fetchRaces = async (year: number): Promise<RacesApiResponse> => {
+  const cacheKey = `races:${year}`;
   const cached = await redis.get(cacheKey);
 
   if (cached) {
@@ -51,7 +51,7 @@ export const fetchRaceWinners = async (year: string): Promise<RaceWinnersApiResp
     await redis.set(cacheKey, JSON.stringify(data), 'EX', 60 * 60); // cache for 1 hour
     return data;
   } catch (error) {
-    console.error(`❌ [fetchRaceWinners] Error fetching race winners for year ${year}:`, error);
-    throw new Error(`❌ Failed to fetch race winners for year ${year}`);
+    console.error(`❌ [fetchRaces] Error fetching races for year ${year}:`, error);
+    throw new Error(`❌ Failed to fetch races for year ${year}`);
   }
 };

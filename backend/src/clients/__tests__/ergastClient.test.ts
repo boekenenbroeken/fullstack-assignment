@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import { fetchSeasons, fetchSeasonChampion, fetchRaceWinners } from '../ergastClient';
+import { fetchSeasons, fetchSeasonChampion, fetchRaces } from '../ergastClient';
 import { api } from '../api';
 import { redis } from '../../lib/redis';
 import {
   mockSeasonsResponse,
   mockChampionResponse,
-  mockRaceWinnersResponse,
+  mockRacesResponse,
 } from './__mocks__/ergastClient.mock';
 
 vi.mock('../api');
@@ -31,16 +31,16 @@ describe('ergastClient', () => {
   it('fetchSeasonChampion success', async () => {
     mockGet.mockResolvedValueOnce(mockChampionResponse);
 
-    const result = await fetchSeasonChampion('2021');
+    const result = await fetchSeasonChampion(2021);
     expect(result).toEqual(mockChampionResponse.data);
     expect(mockGet).toHaveBeenCalledWith('/2021/driverStandings/1.json');
   });
 
-  it('fetchRaceWinners success', async () => {
-    mockGet.mockResolvedValueOnce(mockRaceWinnersResponse);
+  it('fetchRaces success', async () => {
+    mockGet.mockResolvedValueOnce(mockRacesResponse);
 
-    const result = await fetchRaceWinners('2022');
-    expect(result).toEqual(mockRaceWinnersResponse.data);
+    const result = await fetchRaces(2022);
+    expect(result).toEqual(mockRacesResponse.data);
     expect(mockGet).toHaveBeenCalledWith('/2022/results/1.json');
   });
 });
@@ -56,18 +56,16 @@ describe('ergastClient errors', () => {
   it('fetchSeasonChampion throws error on failure', async () => {
     mockGet.mockRejectedValueOnce(new Error('timeout'));
 
-    await expect(fetchSeasonChampion('2021')).rejects.toThrow(
+    await expect(fetchSeasonChampion(2021)).rejects.toThrow(
       '❌ Failed to fetch champion for year 2021'
     );
     expect(mockGet).toHaveBeenCalledWith('/2021/driverStandings/1.json');
   });
 
-  it('fetchRaceWinners throws error on failure', async () => {
+  it('fetchRaces throws error on failure', async () => {
     mockGet.mockRejectedValueOnce(new Error('server error'));
 
-    await expect(fetchRaceWinners('2022')).rejects.toThrow(
-      '❌ Failed to fetch race winners for year 2022'
-    );
+    await expect(fetchRaces(2022)).rejects.toThrow('❌ Failed to fetch race winners for year 2022');
     expect(mockGet).toHaveBeenCalledWith('/2022/results/1.json');
   });
 });

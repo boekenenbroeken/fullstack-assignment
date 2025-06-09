@@ -14,7 +14,7 @@ export const mockChampionResponse = {
   config: {},
 };
 
-export const mockRaceWinnersResponse = {
+export const mockRacesResponse = {
   data: { MRData: { RaceTable: { Races: [] } } },
   status: 200,
   statusText: 'OK',

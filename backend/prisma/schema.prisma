@@ -7,33 +7,52 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Team {
+  id   String    @id
+  name String @unique
+
+  driverSeasons DriverSeason[]
+}
+
 model Driver {
-  id          Int    @id @default(autoincrement())
-  name        String @unique
+  id          String    @id
+  name        String
   nationality String
 
-  racesWon Race[] @relation("RaceWinners")
-
-  championships Season[] @relation("SeasonChampions")
+  championships Season[]
+  racesWon Race[]
+  driverSeasons DriverSeason[]
 }
 
 model Season {
-  id         Int    @id @default(autoincrement())
-  year       Int    @unique
-  champion   Driver @relation("SeasonChampions", fields: [championId], references: [id])
-  championId Int
-  races      Race[]
+  id            Int            @id @default(autoincrement())
+  year          Int            @unique
+  champion      Driver         @relation(fields: [championId], references: [id])
+  championId    String
+  driverSeasons DriverSeason[]
+  races Race[]
 }
 
-model Race {
-  id       Int      @id @default(autoincrement())
+model Race  {
+  id       Int            @id @default(autoincrement())
   name     String
-  round    Int
-  date     DateTime
-  circuit  String
+  round    String
+  winner   Driver   @relation(fields: [winnerId], references: [id])
+  winnerId String
   season   Season   @relation(fields: [seasonId], references: [id])
   seasonId Int
 
-  winner   Driver @relation("RaceWinners", fields: [winnerId], references: [id])
-  winnerId Int
+  @@unique([seasonId, round])
+}
+
+model DriverSeason {
+  id       Int    @id @default(autoincrement())
+  driver   Driver @relation(fields: [driverId], references: [id])
+  driverId String
+  team     Team   @relation(fields: [teamId], references: [id])
+  teamId   String
+  season   Season @relation(fields: [seasonId], references: [id])
+  seasonId Int
+
+  @@unique([driverId, seasonId])
 }

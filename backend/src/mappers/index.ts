@@ -1,5 +1,5 @@
 import { driverMapper } from './driver';
-import { raceWinnersMapper } from './raceWinners';
-import { championsMapper } from './champions';
+import { racesMapper } from './races';
+import { championMapper } from './champions';
 
-export { driverMapper, raceWinnersMapper, championsMapper };
+export { driverMapper, racesMapper, championMapper };

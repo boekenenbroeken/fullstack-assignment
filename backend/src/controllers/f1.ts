@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { getAllChampions } from '../services/f1Service';
+import { getAllChampions, getAllRaces } from '../services/f1Service';
 import { prisma } from '../lib/prisma';
-import { syncSeason } from '../services/syncService';
 
 /**
  * @openapi
@@ -54,48 +53,19 @@ export const testDB = async (_req: Request, res: Response) => {
   }
 };
 
-/**
- * @openapi
- * /api/seed/{year}:
- *   get:
- *     summary: Seed season data
- *     description: Seeds race and champion data for a given year.
- *     parameters:
- *       - name: year
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *         description: The season year to seed
- *     responses:
- *       200:
- *         description: Successfully seeded the season
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 year:
- *                   type: integer
- *       400:
- *         description: Invalid year format
- *       500:
- *         description: Seeding failed
- */
-export const seedSeason = async (req: Request, res: Response) => {
-  const year = Number(req.params.year);
-
-  if (isNaN(year)) {
-    res.status(400).json({ error: 'Invalid year format' });
-  }
-
+export const getRaces = async (req: Request, res: Response) => {
   try {
-    await syncSeason(year);
-    res.status(200).json({ success: true, year });
+    const year = req.params.year ? parseInt(req.params.year, 10) : undefined;
+
+    if (!year || isNaN(year)) {
+      res.status(400).json({ error: 'Invalid year parameter' });
+      return;
+    }
+
+    const data = await getAllRaces(year);
+    res.json(data);
   } catch (err) {
-    console.error(`[seedSeason] Failed to seed year ${year}:`, err);
-    res.status(500).json({ error: 'Seeding failed', details: String(err) });
+    console.error('[getChampions] Failed:', err);
+    res.status(500).json({ error: 'Failed to get champions' });
   }
 };
