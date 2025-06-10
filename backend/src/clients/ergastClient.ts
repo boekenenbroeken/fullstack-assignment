@@ -1,9 +1,11 @@
 import { api } from './api';
 import { redis } from '../lib/redis';
 
-import { ChampionApiResponse, RacesApiResponse } from '../types/ergast';
+import { SeasonsApiResponse, ChampionApiResponse, RacesApiResponse } from '../types/ergast';
 
-export const fetchSeasons = async (): Promise<any> => {
+const CACHE_TTL_SECONDS = 60 * 60;
+
+export const fetchSeasons = async (): Promise<SeasonsApiResponse> => {
   const cacheKey = 'seasons';
   const cached = await redis.get(cacheKey);
 
@@ -13,9 +15,11 @@ export const fetchSeasons = async (): Promise<any> => {
 
   try {
     const res = await api.get('/seasons.json?limit=1000');
-    await redis.set(cacheKey, JSON.stringify(res.data), 'EX', 60 * 60); // 1 hour
+    await redis.set(cacheKey, JSON.stringify(res.data), 'EX', CACHE_TTL_SECONDS);
+
     return res.data;
   } catch (error) {
+    console.error('❌ [fetchSeasons] Error fetching seasons:', error);
     throw new Error('❌ Failed to fetch seasons');
   }
 };
@@ -30,7 +34,8 @@ export const fetchSeasonChampion = async (year: number): Promise<ChampionApiResp
 
   try {
     const { data } = await api.get(`/${year}/driverStandings/1.json`);
-    await redis.set(cacheKey, JSON.stringify(data), 'EX', 60 * 60); // cache for 1 hour
+    await redis.set(cacheKey, JSON.stringify(data), 'EX', CACHE_TTL_SECONDS);
+
     return data as ChampionApiResponse;
   } catch (error) {
     console.error(`❌ [fetchSeasonChampion] Error fetching champion for year ${year}:`, error);
@@ -48,7 +53,8 @@ export const fetchRaces = async (year: number): Promise<RacesApiResponse> => {
 
   try {
     const { data } = await api.get(`/${year}/results/1.json`);
-    await redis.set(cacheKey, JSON.stringify(data), 'EX', 60 * 60); // cache for 1 hour
+    await redis.set(cacheKey, JSON.stringify(data), 'EX', CACHE_TTL_SECONDS);
+
     return data;
   } catch (error) {
     console.error(`❌ [fetchRaces] Error fetching races for year ${year}:`, error);

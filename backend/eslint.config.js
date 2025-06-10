@@ -16,6 +16,10 @@ export default [
     rules: {
       'prettier/prettier': 'error',
       ...eslintPluginTs.configs.recommended.rules,
+      'padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: '*', next: 'return' },
+      ],
     },
   },
 ];

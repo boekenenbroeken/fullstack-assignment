@@ -68,3 +68,29 @@ describe('ergastClient errors', () => {
     expect(mockGet).toHaveBeenCalledWith('/2022/results/1.json');
   });
 });
+
+describe('ergastClient cache hits', () => {
+  it('should return seasons from cache and not call API', async () => {
+    await redis.set('seasons', JSON.stringify(mockSeasonsResponse.data));
+    const result = await fetchSeasons();
+
+    expect(result).toEqual(mockSeasonsResponse.data);
+    expect(mockGet).not.toHaveBeenCalled();
+  });
+
+  it('should return season champion from cache and not call API', async () => {
+    await redis.set('seasonChampion:2021', JSON.stringify(mockChampionResponse.data));
+    const result = await fetchSeasonChampion(2021);
+
+    expect(result).toEqual(mockChampionResponse.data);
+    expect(mockGet).not.toHaveBeenCalled();
+  });
+
+  it('should return races from cache and not call API', async () => {
+    await redis.set('races:2022', JSON.stringify(mockRacesResponse.data));
+    const result = await fetchRaces(2022);
+
+    expect(result).toEqual(mockRacesResponse.data);
+    expect(mockGet).not.toHaveBeenCalled();
+  });
+});

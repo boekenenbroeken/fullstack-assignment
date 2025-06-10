@@ -64,3 +64,14 @@ export type RacesApiResponse = {
     };
   };
 };
+
+export type SeasonsApiResponse = {
+  MRData: {
+    SeasonTable: {
+      Seasons: {
+        season: string;
+        url: string;
+      }[];
+    };
+  };
+};
