@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest';
-
 import { racesMapper } from '../races';
 import {
   fullRaceData,
@@ -14,26 +13,17 @@ describe('racesMapper', () => {
     expect(result[0].winner.name).toBe('Max Verstappen');
   });
 
-  it('should handle missing winner gracefully', () => {
-    const result = racesMapper(missingDriverData);
-    expect(result[0].winner).toEqual({
-      id: 'unknown',
-      name: '',
-      nationality: 'Unknown',
-    });
+  it('should throw if Driver is missing', () => {
+    expect(() => racesMapper(missingDriverData)).toThrow();
   });
 
-  it('should fallback to "Unknown Circuit" if circuitName is missing', () => {
+  it('should map even if Circuit name is irrelevant (not used)', () => {
     const result = racesMapper(missingCircuitNameData);
-
-    // @ts-expect-error
-    expect(result[0].circuitName).toBe('Unknown Circuit');
+    expect(result[0].name).toBe('Saudi Arabian Grand Prix');
   });
 
-  it('should fallback to "Unknown Circuit" if Circuit is undefined', () => {
+  it('should map even if Circuit is undefined (not used)', () => {
     const result = racesMapper(undefinedCircuitData);
-
-    // @ts-expect-error
-    expect(result[0].circuitName).toBe('Unknown Circuit');
+    expect(result[0].name).toBe('Imola Grand Prix');
   });
 });

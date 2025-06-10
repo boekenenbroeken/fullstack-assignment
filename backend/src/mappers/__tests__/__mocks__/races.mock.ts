@@ -3,7 +3,7 @@ import { RawRace } from '../../../types/ergast';
 export const fullRaceData: RawRace[] = [
   {
     raceName: 'Australian Grand Prix',
-    round: 1,
+    round: '1',
     Results: [
       {
         Driver: {
@@ -11,6 +11,10 @@ export const fullRaceData: RawRace[] = [
           givenName: 'Max',
           familyName: 'Verstappen',
           nationality: 'Dutch',
+        },
+        Constructor: {
+          constructorId: 'red_bull',
+          name: 'Red Bull',
         },
       },
     ],
@@ -20,15 +24,24 @@ export const fullRaceData: RawRace[] = [
 export const missingDriverData: RawRace[] = [
   {
     raceName: 'Bahrain Grand Prix',
-    round: 2,
-    Results: [{} as any],
+    round: '2',
+    Results: [
+      {
+        // @ts-expect-error
+        Driver: undefined,
+        Constructor: {
+          constructorId: 'red_bull',
+          name: 'Red Bull',
+        },
+      },
+    ],
   },
 ];
 
 export const missingCircuitNameData: RawRace[] = [
   {
     raceName: 'Saudi Arabian Grand Prix',
-    round: 3,
+    round: '3',
     Results: [
       {
         Driver: {
@@ -36,6 +49,10 @@ export const missingCircuitNameData: RawRace[] = [
           givenName: 'Lewis',
           familyName: 'Hamilton',
           nationality: 'British',
+        },
+        Constructor: {
+          constructorId: 'mercedes',
+          name: 'Mercedes',
         },
       },
     ],
@@ -45,7 +62,7 @@ export const missingCircuitNameData: RawRace[] = [
 export const undefinedCircuitData: RawRace[] = [
   {
     raceName: 'Imola Grand Prix',
-    round: 4,
+    round: '4',
     Results: [
       {
         Driver: {
@@ -53,6 +70,10 @@ export const undefinedCircuitData: RawRace[] = [
           givenName: 'Charles',
           familyName: 'Leclerc',
           nationality: 'Monégasque',
+        },
+        Constructor: {
+          constructorId: 'ferrari',
+          name: 'Ferrari',
         },
       },
     ],

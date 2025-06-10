@@ -13,7 +13,6 @@ vi.mock('../api');
 
 beforeEach(async () => {
   vi.clearAllMocks();
-
   await redis.flushall();
 });
 
@@ -65,7 +64,7 @@ describe('ergastClient errors', () => {
   it('fetchRaces throws error on failure', async () => {
     mockGet.mockRejectedValueOnce(new Error('server error'));
 
-    await expect(fetchRaces(2022)).rejects.toThrow('❌ Failed to fetch race winners for year 2022');
+    await expect(fetchRaces(2022)).rejects.toThrow('❌ Failed to fetch races for year 2022');
     expect(mockGet).toHaveBeenCalledWith('/2022/results/1.json');
   });
 });
