@@ -5,6 +5,7 @@ export type Champion = {
   };
   
   export type Race = {
+    id: number;
     raceName: string;
     date: string;
     round: string;

@@ -17,11 +17,17 @@ import { prisma } from '../lib/prisma';
  *         description: Comma-separated list of years
  *     responses:
  *       200:
- *         description: List of champion data
+ *         description: Successfully retrieved champion data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Champion'
  *       500:
- *         description: Server error
+ *         description: Failed to get champions due to server error
  */
-export const getChampions = async (_req: Request, res: Response) => {
+export const getChampions = async (req: Request, res: Response) => {
   try {
     const data = await getAllChampions();
     res.json(data);
@@ -39,7 +45,13 @@ export const getChampions = async (_req: Request, res: Response) => {
  *     description: Returns a list of seasons from the database to verify DB connection.
  *     responses:
  *       200:
- *         description: List of seasons from the database
+ *         description: Successfully retrieved seasons from the database
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Season'
  *       500:
  *         description: Database connection failed
  */
@@ -53,19 +65,48 @@ export const testDB = async (_req: Request, res: Response) => {
   }
 };
 
-export const getRaces = async (req: Request, res: Response) => {
+/**
+ * @openapi
+ * /api/races/{year}:
+ *   get:
+ *     summary: Get races and winners for a specific year
+ *     description: Returns a list of races and winners for the given season year.
+ *     parameters:
+ *       - in: path
+ *         name: year
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 2022
+ *         description: Year of the season to retrieve races for
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved race data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Race'
+ *       400:
+ *         description: Invalid year parameter
+ *       500:
+ *         description: Failed to get race data due to server error
+ */
+export const getRaces = async (req: Request<{ year: string }>, res: Response) => {
   try {
-    const year = req.params.year ? parseInt(req.params.year, 10) : undefined;
+    const year = parseInt(req.params.year, 10);
 
-    if (!year || isNaN(year)) {
+    if (isNaN(year)) {
       res.status(400).json({ error: 'Invalid year parameter' });
+
       return;
     }
 
     const data = await getAllRaces(year);
     res.json(data);
   } catch (err) {
-    console.error('[getChampions] Failed:', err);
-    res.status(500).json({ error: 'Failed to get champions' });
+    console.error('[getRaces] Failed:', err);
+    res.status(500).json({ error: 'Failed to get races' });
   }
 };

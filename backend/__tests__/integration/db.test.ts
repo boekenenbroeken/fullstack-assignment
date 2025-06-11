@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { prisma } from '../src/lib/prisma';
+import { prisma } from '../../src/lib/prisma';
 
 describe('Database connection', () => {
   it('should return an empty list of seasons', async () => {

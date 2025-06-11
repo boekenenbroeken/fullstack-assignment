@@ -68,10 +68,13 @@ export type RacesApiResponse = {
 export type SeasonsApiResponse = {
   MRData: {
     SeasonTable: {
-      Seasons: {
-        season: string;
-        url: string;
-      }[];
+      Seasons: Season[];
     };
   };
+};
+
+export type Season = {
+  year: number;
+  id: number;
+  championId: string;
 };

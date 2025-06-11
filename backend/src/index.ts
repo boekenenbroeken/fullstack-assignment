@@ -8,7 +8,7 @@ import f1Routes from './routes/f1Routes';
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 
 const port = process.env.PORT ?? 5000;
 
