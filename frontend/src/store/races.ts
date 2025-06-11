@@ -6,20 +6,27 @@ type RacesState = {
   data: Race[];
   loading: boolean;
   error: boolean;
-  fetch: (season: string) => void;
+  fetch: (season: string) => Promise<void>;
+  hydrate: (season: string) => void;
 };
 
 export const useRacesStore = create<RacesState>((set) => ({
   data: [],
   loading: false,
   error: false,
+
   fetch: async (season: string) => {
     try {
       set({ loading: true, error: false });
       const data = await fetchRaces(season);
       set({ data, loading: false });
-    } catch {
+    } catch (e) {
       set({ error: true, loading: false });
     }
+  },
+
+  hydrate: (season: string) => {
+    const { fetch } = useRacesStore.getState();
+    fetch(season);
   },
 }));

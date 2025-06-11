@@ -8,14 +8,12 @@ import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import { useDelayedLoader } from 'utils/useDelayedLoader';
 
 export const WorldsChampions = () => {
-  const { data, loading, error, fetch } = useChampionsStore();
+  const { data, loading, error, hydrate } = useChampionsStore();
   const showLoader = useDelayedLoader(loading || !data?.length); // 2 second min
 
   useEffect(() => {
-    if (!data?.length) {
-      fetch();
-    }
-  }, [data, fetch]);
+    hydrate();
+  }, [hydrate]);
 
   if (showLoader) return <Loader />;
   if (error) return <ErrorScreen />;

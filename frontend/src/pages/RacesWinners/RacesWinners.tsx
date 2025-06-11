@@ -15,38 +15,36 @@ export const RacesWinners = () => {
     data: races,
     loading: racesLoading,
     error: racesError,
-    fetch: fetchRaces,
+    hydrate: hydrateRaces,
   } = useRacesStore();
+
   const {
     data: champions,
     loading: championsLoading,
     error: championsError,
-    fetch: fetchChampions,
+    hydrate: hydrateChampions,
   } = useChampionsStore();
-
-  const isStillLoading = (racesLoading || championsLoading) && !(racesError || championsError);
-
-  const showLoader = useDelayedLoader(isStillLoading);
 
   useEffect(() => {
     if (season) {
-      fetchRaces(season);
+      hydrateRaces(season);
     }
-  }, [season, fetchRaces]);
+  }, [season, hydrateRaces]);
 
   useEffect(() => {
     if (!champions.length) {
-      fetchChampions();
+      hydrateChampions();
     }
-  }, [champions.length, fetchChampions]);
+  }, [champions.length, hydrateChampions]);
+
+  const isStillLoading = (racesLoading || championsLoading) && !(racesError || championsError);
+  const showLoader = useDelayedLoader(isStillLoading);
 
   if (showLoader) return <Loader />;
-
-  if (racesError || championsError) return <ErrorScreen />;
+  if (racesError || championsError || !season) return <ErrorScreen />;
 
   const noData = races.length === 0 || champions.length === 0;
-
-  if (!season || noData) return <ErrorScreen />;
+  if (noData) return <ErrorScreen />;
 
   const championId = champions.find((champion) => champion.season === season)?.driver.id;
 
