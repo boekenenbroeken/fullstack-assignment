@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { useChampionsStore } from '../../store/champions';
-import { Loader } from '../../components/Loader/Loader';
-import { ErrorScreen } from '../../pages/ErrorScreen/ErrorScreen';
+import { useChampionsStore } from 'store/champions';
+import { Loader } from 'components/Loader/Loader';
+import { ErrorScreen } from 'pages/ErrorScreen/ErrorScreen';
 import { Link } from 'react-router-dom';
-import { Card } from '../../components/Card/Card';
+import { Card } from 'components/Card/Card';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import { useDelayedLoader } from '../../utils/useDelayedLoader';
+import { useDelayedLoader } from 'utils/useDelayedLoader';
 
 export const WorldsChampions = () => {
   const { data, loading, error, fetch } = useChampionsStore();

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { FlagIcon } from '../FlagIcon/FlagIcon';
+import { FlagIcon } from 'components/FlagIcon/FlagIcon';
 import clsx from 'clsx';
 
 type Entry = {

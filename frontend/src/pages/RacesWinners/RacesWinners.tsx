@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useRacesStore } from '../../store/races';
-import { useChampionsStore } from '../../store/champions';
-import { Loader } from '../../components/Loader/Loader';
-import { ErrorScreen } from '../../pages/ErrorScreen/ErrorScreen';
-import { Card } from '../../components/Card/Card';
+import { useRacesStore } from 'store/races';
+import { useChampionsStore } from 'store/champions';
+import { Loader } from 'components/Loader/Loader';
+import { ErrorScreen } from 'pages/ErrorScreen/ErrorScreen';
+import { Card } from 'components/Card/Card';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
-import { useDelayedLoader } from '../../utils/useDelayedLoader';
+import { useDelayedLoader } from 'utils/useDelayedLoader';
 
 export const RacesWinners = () => {
   const { season } = useParams<{ season: string }>();
