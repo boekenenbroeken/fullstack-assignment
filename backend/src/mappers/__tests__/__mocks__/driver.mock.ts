@@ -11,5 +11,12 @@ export const mockIncompleteRawDriver: RawDriver = {
   driverId: 'unknown',
   givenName: '',
   familyName: '',
-  nationality: 'Unknown',
+  nationality: '',
+};
+
+export const mockUndefinedDriverId: RawDriver = {
+  driverId: undefined as unknown as string,
+  givenName: 'Test',
+  familyName: 'Driver',
+  nationality: 'Testland',
 };

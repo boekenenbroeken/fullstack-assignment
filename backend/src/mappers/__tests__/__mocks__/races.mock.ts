@@ -2,6 +2,7 @@ import { RawRace } from '../../../types/ergast';
 
 export const fullRaceData: RawRace[] = [
   {
+    id: 1,
     raceName: 'Australian Grand Prix',
     round: '1',
     Results: [
@@ -23,12 +24,12 @@ export const fullRaceData: RawRace[] = [
 
 export const missingDriverData: RawRace[] = [
   {
+    id: 2,
     raceName: 'Bahrain Grand Prix',
     round: '2',
     Results: [
       {
-        // @ts-expect-error
-        Driver: undefined,
+        Driver: undefined as unknown as RawRace['Results'][0]['Driver'], // ✅ fully typed, no `any`
         Constructor: {
           constructorId: 'red_bull',
           name: 'Red Bull',
@@ -40,6 +41,7 @@ export const missingDriverData: RawRace[] = [
 
 export const missingCircuitNameData: RawRace[] = [
   {
+    id: 3,
     raceName: 'Saudi Arabian Grand Prix',
     round: '3',
     Results: [
@@ -61,6 +63,7 @@ export const missingCircuitNameData: RawRace[] = [
 
 export const undefinedCircuitData: RawRace[] = [
   {
+    id: 4,
     raceName: 'Imola Grand Prix',
     round: '4',
     Results: [

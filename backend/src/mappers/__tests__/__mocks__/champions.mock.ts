@@ -1,4 +1,4 @@
-import type { ChampionApiResponse } from '../../../types/ergast';
+import { ChampionApiResponse, RawDriver } from '../../../types/ergast';
 
 export const mockChampionApiResponse: ChampionApiResponse = {
   MRData: {
@@ -30,7 +30,7 @@ export const mockChampionApiResponse: ChampionApiResponse = {
 
 export const brokenMissingStandingsTable = {
   MRData: {},
-} as any;
+} as ChampionApiResponse;
 
 export const brokenMissingStandingsList: ChampionApiResponse = {
   MRData: {
@@ -62,7 +62,7 @@ export const brokenMissingDriver: ChampionApiResponse = {
         {
           DriverStandings: [
             {
-              Driver: null as any,
+              Driver: null as unknown as RawDriver,
               Constructors: [
                 {
                   constructorId: 'mercedes',

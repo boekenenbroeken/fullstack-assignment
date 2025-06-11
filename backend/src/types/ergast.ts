@@ -28,6 +28,7 @@ export type Champion = {
 };
 
 export type RawRace = {
+  id: number;
   raceName: string;
   round: string;
   Results: {
@@ -37,6 +38,7 @@ export type RawRace = {
 };
 
 export type Race = {
+  id: number;
   name: string;
   round: string;
   winner: Driver;

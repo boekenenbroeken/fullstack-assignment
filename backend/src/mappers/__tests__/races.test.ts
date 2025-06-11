@@ -10,7 +10,23 @@ import {
 describe('racesMapper', () => {
   it('should correctly map valid race data', () => {
     const result = racesMapper(fullRaceData);
-    expect(result[0].winner.name).toBe('Max Verstappen');
+
+    expect(result).toEqual([
+      {
+        id: 1,
+        name: 'Australian Grand Prix',
+        round: '1',
+        winner: {
+          id: 'max_verstappen',
+          name: 'Max Verstappen',
+          nationality: 'Dutch',
+        },
+        team: {
+          id: 'red_bull',
+          name: 'Red Bull',
+        },
+      },
+    ]);
   });
 
   it('should throw if Driver is missing', () => {

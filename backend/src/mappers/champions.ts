@@ -15,7 +15,6 @@ export const championMapper = (data: ChampionApiResponse): Champion => {
   const driver = driverStanding.Driver;
   const constructor = driverStanding.Constructors?.[0];
 
-  console.log({ constructor, driver });
   if (!driver || !constructor) {
     throw new Error(`Incomplete data for season ${season}`);
   }

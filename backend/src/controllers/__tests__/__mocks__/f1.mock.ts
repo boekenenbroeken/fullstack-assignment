@@ -17,7 +17,7 @@ export const mockChampions: Champion[] = [
 
 export const mockSeasonData: Season[] = [{ year: 2020, id: 1, championId: '1' }];
 
-export const mockRaces = [
+export const mockRaces: Race[] = [
   {
     id: 1,
     name: 'Mock Grand Prix',

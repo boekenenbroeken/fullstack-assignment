@@ -5,8 +5,9 @@ export const syncSeason = async (year: number) => {
   const champion = await getSeasonChampion(year);
   const races = await getRaces(year);
 
-  if (!champion || !races) {
+  if (!champion || !races?.length) {
     console.warn(`⚠️ Incomplete data for ${year}, skipping.`);
+
     return;
   }
 
@@ -27,6 +28,7 @@ export const syncSeason = async (year: number) => {
       year,
       champion: { connect: { id: champion.driver.id } },
     },
+    select: { id: true },
   });
 
   await prisma.driver.createMany({
