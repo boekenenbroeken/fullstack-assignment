@@ -2,21 +2,29 @@ FROM node:20
 
 WORKDIR /app
 
-# copy package.json + lockfile
-COPY package*.json ./
+# Copy package.json and lockfile first for better caching
+COPY backend/package.json ./package.json
+COPY backend/pnpm-lock.yaml ./pnpm-lock.yaml
 
-# install deps first
-RUN npm install
+# Install pnpm and backend dependencies
+RUN npm install -g pnpm && \
+    pnpm install --frozen-lockfile && \
+    apt-get update && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/*
 
-# copy your Prisma schema and source
-COPY prisma ./prisma
-COPY . .
+# Copy the rest of backend source code
+COPY backend/. .
 
-# generate Prisma client (build both engines)
-RUN npx prisma generate
+# Generate prisma client
+RUN pnpm prisma generate
 
-# copy entrypoint script and set it
-COPY docker-entrypoint.sh /usr/local/bin/
+# Copy entrypoint script & set permissions
+COPY backend/docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Set entrypoint
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-EXPOSE 3000
+# Default CMD
+CMD ["pnpm", "start"]
