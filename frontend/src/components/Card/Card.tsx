@@ -41,7 +41,7 @@ export const Card = ({
       <div className="flex items-center gap-5">
         <FlagIcon nationality={driverNationality} />
         <div className="flex flex-col">
-          <p className="font-semibold text-lg leading-snug">{driver}</p>
+          <p className="font-semibold text-lg leading-snug pr-5 md:pr-0">{driver}</p>
           <p className="text-sm text-gray-500">{team}</p>
         </div>
       </div>

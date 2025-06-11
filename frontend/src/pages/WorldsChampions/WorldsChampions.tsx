@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import { useChampionsStore } from '../../store/champions';
 import { Loader } from '../../components/Loader/Loader';
-import { ErrorState } from '../../components/Error/Error';
+import { ErrorScreen } from '../../pages/ErrorScreen/ErrorScreen';
 import { Link } from 'react-router-dom';
 import { Card } from '../../components/Card/Card';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
+import { useDelayedLoader } from '../../utils/useDelayedLoader';
 
 export const WorldsChampions = () => {
   const { data, loading, error, fetch } = useChampionsStore();
+  const showLoader = useDelayedLoader(loading || !data?.length); // 2 second min
 
   useEffect(() => {
     if (!data?.length) {
@@ -15,12 +17,12 @@ export const WorldsChampions = () => {
     }
   }, [data, fetch]);
 
-  if (loading || !data?.length) return <Loader />;
-  if (error) return <ErrorState />;
+  if (showLoader) return <Loader />;
+  if (error) return <ErrorScreen />;
 
   return (
     <main className="p-4">
-      <h1 className="text-3xl font-semibold tracking-tight mb-10 text-center">
+      <h1 className="text-3xl font-semibold tracking-tight mt-5 mb-10 text-center">
         🏆 F1 World Champions
       </h1>
       <ul className="space-y-4">
