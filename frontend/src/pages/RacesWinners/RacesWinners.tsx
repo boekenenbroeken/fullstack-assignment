@@ -2,11 +2,10 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useRacesStore } from 'store/races';
 import { useChampionsStore } from 'store/champions';
-import { Loader } from 'components/Loader/Loader';
-import { ErrorScreen } from 'pages/ErrorScreen/ErrorScreen';
 import { Card } from 'components/Card/Card';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import { useDelayedLoader } from 'utils/useDelayedLoader';
+import { DataBoundary } from 'components/DataBoundary/DataBoundary';
 
 export const RacesWinners = () => {
   const { season } = useParams<{ season: string }>();
@@ -26,52 +25,43 @@ export const RacesWinners = () => {
   } = useChampionsStore();
 
   useEffect(() => {
-    if (season) {
-      hydrateRaces(season);
-    }
+    if (season) hydrateRaces(season);
   }, [season, hydrateRaces]);
 
   useEffect(() => {
-    if (!champions.length) {
-      hydrateChampions();
-    }
+    if (!champions.length) hydrateChampions();
   }, [champions.length, hydrateChampions]);
 
   const isStillLoading = (racesLoading || championsLoading) && !(racesError || championsError);
   const showLoader = useDelayedLoader(isStillLoading);
-
-  if (showLoader) return <Loader />;
-  if (racesError || championsError || !season) return <ErrorScreen />;
-
-  const noData = races.length === 0 || champions.length === 0;
-  if (noData) return <ErrorScreen />;
-
-  const championId = champions.find((champion) => champion.season === season)?.driver.id;
+  const hasError = racesError || championsError;
+  const noData = !season || races.length === 0 || champions.length === 0;
 
   return (
-    <main className="p-4">
-      <Link to="/" className="inline-flex items-center text-blue-500 mb-6">
-        <ChevronLeftIcon className="w-5 h-5 mr-1" />
-        Back to World Champions
-      </Link>
+    <DataBoundary loading={showLoader} error={hasError} empty={noData}>
+      <main className="p-4">
+        <Link to="/" className="inline-flex items-center text-blue-500 mb-6">
+          <ChevronLeftIcon className="w-5 h-5 mr-1" />
+          Back to World Champions
+        </Link>
 
-      <h1 className="text-3xl font-semibold tracking-tight mb-10 text-center">
-        🏁 Races Winners — {season}
-      </h1>
-
-      <ul className="space-y-4">
-        {races.map(({ winner, team, name }) => (
-          <li key={name}>
-            <Card
-              driver={winner.name}
-              driverNationality={winner.nationality}
-              team={team.name}
-              isHighlighted={championId === winner.id}
-              entries={[{ label: 'Race', value: name }]}
-            />
-          </li>
-        ))}
-      </ul>
-    </main>
+        <h1 className="text-3xl font-semibold tracking-tight mb-10 text-center">
+          🏁 Races Winners — {season}
+        </h1>
+        <ul className="space-y-4">
+          {races.map(({ winner, team, name }) => (
+            <li key={name}>
+              <Card
+                driver={winner.name}
+                driverNationality={winner.nationality}
+                team={team.name}
+                isHighlighted={champions.find((c) => c.season === season)?.driver.id === winner.id}
+                entries={[{ label: 'Race', value: name }]}
+              />
+            </li>
+          ))}
+        </ul>
+      </main>
+    </DataBoundary>
   );
 };
