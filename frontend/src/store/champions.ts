@@ -1,13 +1,17 @@
 import { create } from 'zustand';
+
 import type { Champion } from '../api';
 import { fetchChampions } from '../api';
+
+type ChampionsActions = {
+  fetch: (years?: string) => Promise<void>;
+};
 
 type ChampionsState = {
   data: Champion[];
   loading: boolean;
   error: boolean;
-  fetch: (years?: string) => void;
-};
+} & ChampionsActions;
 
 export const useChampionsStore = create<ChampionsState>((set) => ({
   data: [],

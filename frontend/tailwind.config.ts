@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       maxWidth: {
-        '1280': '1280px',
+        1280: '1280px',
       },
       keyframes: {
         race: {

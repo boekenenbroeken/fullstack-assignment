@@ -6,11 +6,12 @@ export type Champion = {
 
 export type Race = {
   id: number;
-  raceName: string;
+  name: string;
   date: string;
   round: string;
   circuitName: string;
   winner: { id: string; name: string; nationality: string };
+  team: { id: string; name: string };
 };
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
@@ -23,7 +24,7 @@ export async function fetchChampions(years?: string): Promise<Champion[]> {
 }
 
 export async function fetchRaces(season: string): Promise<Race[]> {
-  const res = await fetch(`${BASE}/seed/${season}`);
+  const res = await fetch(`${BASE}/races/${season}`);
 
   if (!res.ok) throw new Error('Failed to load races');
   return res.json();

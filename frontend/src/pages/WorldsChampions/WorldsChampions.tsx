@@ -20,7 +20,9 @@ export const WorldsChampions = () => {
 
   return (
     <main className="p-4">
-      <h1 className="text-2xl font-bold mb-6">F1 World Champions</h1>
+      <h1 className="text-3xl font-semibold tracking-tight mb-10 text-center">
+        🏆 F1 World Champions
+      </h1>
       <ul className="space-y-4">
         {data.map(({ season, driver, team }) => (
           <li key={`${season}-${driver.id}`}>

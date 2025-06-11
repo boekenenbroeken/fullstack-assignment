@@ -1,7 +1,5 @@
-import type { FC, SVGProps } from 'react';
+import type { FC } from 'react';
 import RacingCarIcon from './assets/racing-car.svg?react';
-
-type SVGComponent = FC<SVGProps<SVGSVGElement>>;
 
 const laneCount = 3;
 const trackClass =
