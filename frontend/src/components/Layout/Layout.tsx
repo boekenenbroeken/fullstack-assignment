@@ -1,17 +1,9 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 
-export const Layout = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <div className="layout">
-        <header className="layout-header">
-            <h1>Formula 1 Stats</h1>
-        </header>
-        <main className="layout-main">
-            {children}
-        </main>
-        <footer className="layout-footer">
-            <p>&copy; {new Date().getFullYear()} Formula 1 Stats</p>
-        </footer>
-        </div>
-    );
-}
+type Props = {
+  readonly children: ReactNode;
+};
+
+export const Layout = ({ children }: Props) => (
+  <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-9">{children}</div>
+);

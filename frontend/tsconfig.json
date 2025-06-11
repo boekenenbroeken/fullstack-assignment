@@ -1,12 +1,39 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx", // or "react" for older projects
+    // Use React 19 automatic JSX runtime
+    "jsx": "react-jsx",
+
+    // Modern ESM output
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "node",
+
+    // Interop settings (safe default for modern bundlers)
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Strict type checking (modern strict mode)
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+
+    // Speed improvements
     "skipLibCheck": true,
-    "strict": true
+
+    // Better editor experience with baseUrl
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["./src/*"]
+    },
+
+    // Correct type lookup locations
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "types": ["vite/client", "./src/types"]
   },
-  "include": ["src"]
+
+  "include": ["src"],
+  "exclude": ["dist", "node_modules"]
 }
