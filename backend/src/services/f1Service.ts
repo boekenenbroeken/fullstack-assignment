@@ -12,20 +12,30 @@ export const getSeasonChampion = async (year: number): Promise<Champion> => {
 };
 
 export const getAllChampions = async () => {
-  const data = await prisma.driverSeason.findMany({
+  const seasons = await prisma.season.findMany({
     include: {
-      season: true,
-      driver: true,
-      team: true,
+      champion: {
+        include: {
+          driverSeasons: {
+            include: {
+              team: true,
+            },
+          },
+        },
+      },
     },
-    orderBy: { season: { year: 'asc' } },
   });
 
-  return data.map((item) => ({
-    season: item.season.year.toString(),
-    driver: item.driver,
-    team: item.team,
-  }));
+  return seasons.map(({ id, champion, year }) => {
+    const { driverSeasons, ...driver } = champion;
+    const team = driverSeasons.find((driverSeason) => driverSeason.seasonId === id)?.team;
+
+    return {
+      season: year.toString(),
+      driver,
+      team,
+    };
+  });
 };
 
 export const getRaces = async (year: number): Promise<Race[]> => {
