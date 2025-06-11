@@ -1,5 +1,5 @@
 import type { FC, SVGProps } from 'react';
-import { ReactComponent as RacingCarIcon } from './assets/racing-car.svg';
+import RacingCarIcon from './assets/racing-car.svg?react';
 
 type SVGComponent = FC<SVGProps<SVGSVGElement>>;
 

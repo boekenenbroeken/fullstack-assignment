@@ -1,7 +1,7 @@
 export type Champion = {
   season: string;
   driver: { id: string; name: string; nationality: string };
-  constructorName: string;
+  team: { id: string; name: string };
 };
 
 export type Race = {

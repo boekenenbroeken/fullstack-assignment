@@ -22,13 +22,13 @@ export const WorldsChampions = () => {
     <main className="p-4">
       <h1 className="text-2xl font-bold mb-6">F1 World Champions</h1>
       <ul className="space-y-4">
-        {data.map(({ season, driver, constructorName }) => (
-          <li key={season}>
+        {data.map(({ season, driver, team }) => (
+          <li key={`${season}-${driver.id}`}>
             <Link to={`/race/${season}`}>
               <Card
                 driver={driver.name}
                 driverNationality={driver.nationality}
-                constructorName={constructorName}
+                team={team.name}
                 entries={[{ label: 'Season', value: season }]}
                 aside={<ChevronRightIcon className="w-4 h-4" aria-hidden />}
               />

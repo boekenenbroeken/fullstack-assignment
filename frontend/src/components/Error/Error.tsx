@@ -1,4 +1,4 @@
-import { ReactComponent as ErrorIcon } from './assets/car-error.svg';
+import ErrorIcon from './assets/car-error.svg?react';
 
 export const ErrorState: React.FC = () => (
   <div className="flex flex-col items-center justify-center h-screen">

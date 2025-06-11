@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { FlagIcon } from '../FlagIcon/FlagIcon';
+import clsx from 'clsx';
 
 type Entry = {
   readonly label: string;
@@ -9,9 +10,9 @@ type Entry = {
 type Props = {
   readonly driver: string;
   readonly driverNationality: string;
-  readonly isHighlighted?: boolean;
-  readonly constructorName: string;
+  readonly team: string;
   readonly entries: readonly Entry[];
+  readonly isHighlighted?: boolean;
   readonly aside?: ReactNode;
   readonly season?: string;
 };
@@ -19,37 +20,37 @@ type Props = {
 export const Card = ({
   driver,
   driverNationality,
-  isHighlighted = false,
-  constructorName,
+  team,
   entries,
-  aside = null,
+  isHighlighted,
+  aside,
   season,
 }: Props) => {
-  const containerClasses = [
-    'flex justify-between items-center w-full max-w-[800px] p-4 mb-3 rounded shadow-lg transition',
-    isHighlighted && 'border-2 border-yellow-400 shadow-yellow-200',
-    aside && 'hover:shadow-2xl',
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const baseClasses =
+    'flex justify-between items-center w-full px-4 md:px-8 py-6 mb-4 rounded-2xl bg-white shadow transition';
+
+  const containerClasses = clsx(baseClasses, {
+    'border-2 border-yellow-400 shadow-lg shadow-yellow-200': isHighlighted,
+    'hover:shadow-2xl hover:scale-[1.02] hover:transition-transform': aside,
+  });
 
   const title = isHighlighted ? `${season} World Champion` : undefined;
 
   return (
     <div className={containerClasses} title={title}>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-5">
         <FlagIcon nationality={driverNationality} />
-        <div>
-          <p className="font-bold">{driver}</p>
-          <p className="text-gray-500 font-medium">{constructorName}</p>
+        <div className="flex flex-col">
+          <p className="font-semibold text-lg leading-snug">{driver}</p>
+          <p className="text-sm text-gray-500">{team}</p>
         </div>
       </div>
 
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-6">
         {entries.map(({ label, value }) => (
           <dl key={label} className="text-right">
-            <dt className="text-gray-500 font-light">{label}</dt>
-            <dd className="font-bold">{value}</dd>
+            <dt className="text-xs text-gray-400">{label}</dt>
+            <dd className="text-base font-semibold">{value}</dd>
           </dl>
         ))}
         {aside}

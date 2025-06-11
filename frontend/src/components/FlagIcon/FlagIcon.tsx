@@ -1,20 +1,20 @@
 import type { FC, SVGProps } from 'react';
 
-import { ReactComponent as SpanishFlag } from './assets/spain.svg';
-import { ReactComponent as BritishFlag } from './assets/united-kingdom.svg';
-import { ReactComponent as DutchFlag } from './assets/netherlands.svg';
-import { ReactComponent as AustralianFlag } from './assets/australia.svg';
-import { ReactComponent as BrazilianFlag } from './assets/brazil.svg';
-import { ReactComponent as ColombianFlag } from './assets/colombia.svg';
-import { ReactComponent as FinnishFlag } from './assets/finland.svg';
-import { ReactComponent as FrenchFlag } from './assets/france.svg';
-import { ReactComponent as GermanFlag } from './assets/germany.svg';
-import { ReactComponent as ItalianFlag } from './assets/italy.svg';
-import { ReactComponent as MexicanFlag } from './assets/mexico.svg';
-import { ReactComponent as MonegasqueFlag } from './assets/monaco.svg';
-import { ReactComponent as PolishFlag } from './assets/poland.svg';
-import { ReactComponent as VenezuelanFlag } from './assets/venezuela.svg';
-import { ReactComponent as Placeholder } from './assets/placeholder.svg';
+import SpanishFlag from './assets/spain.svg?react';
+import BritishFlag from './assets/united-kingdom.svg?react';
+import DutchFlag from './assets/netherlands.svg?react';
+import AustralianFlag from './assets/australia.svg?react';
+import BrazilianFlag from './assets/brazil.svg?react';
+import ColombianFlag from './assets/colombia.svg?react';
+import FinnishFlag from './assets/finland.svg?react';
+import FrenchFlag from './assets/france.svg?react';
+import GermanFlag from './assets/germany.svg?react';
+import ItalianFlag from './assets/italy.svg?react';
+import MexicanFlag from './assets/mexico.svg?react';
+import MonegasqueFlag from './assets/monaco.svg?react';
+import PolishFlag from './assets/poland.svg?react';
+import VenezuelanFlag from './assets/venezuela.svg?react';
+import Placeholder from './assets/placeholder.svg?react';
 
 type SVGComponent = FC<SVGProps<SVGSVGElement>>;
 
