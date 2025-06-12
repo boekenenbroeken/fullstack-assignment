@@ -1,54 +1,48 @@
-# React + TypeScript + Vite
+# 🏎 F1 Fullstack Assignment — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend part of the F1 assignment.  
+Built with **React 19**, **Vite 6**, **Zustand**, **React Router 7**, fully tested with **Vitest** and **Testing Library**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ⚙️ Tech Stack
 
-## Expanding the ESLint configuration
+- ⚛️ React 19
+- 🚀 Vite 6
+- 🗺 React Router DOM 7
+- 🪝 Zustand (state management)
+- 🎯 TypeScript 5.8
+- 🎨 TailwindCSS 4
+- 🧪 Vitest (unit tests, coverage)
+- 🧹 ESLint & Prettier (code quality)
+- 🖼 SVG support via vite-plugin-svgr
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🚀 Scripts
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Command              | Description                  |
+| -------------------- | ---------------------------- |
+| `npm run dev`        | Start dev server             |
+| `npm run build`      | Build production bundle      |
+| `npm run preview`    | Preview production build     |
+| `npm run lint`       | Lint project (ESLint strict) |
+| `npm run format`     | Format code with Prettier    |
+| `npm run test`       | Run all tests (Vitest)       |
+| `npm run test:watch` | Run tests in watch mode      |
+| `npm run test:ui`    | Run Vitest UI                |
+| `npm run coverage`   | Generate coverage report     |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## 🏁 Project Structure
+
+```bash
+src/
+  ├── api/                # API clients & mocks
+  ├── components/         # Shared UI components
+  ├── pages/              # Pages (WorldsChampions, RacesWinners, etc.)
+  ├── store/              # Zustand stores
+  ├── routes/             # App routes
+  ├── utils/              # Reusable hooks/helpers
 ```
