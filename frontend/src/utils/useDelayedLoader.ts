@@ -6,7 +6,7 @@ export const useDelayedLoader = (isLoading: boolean) => {
   const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
-    let timeout: number;
+    let timeout: ReturnType<typeof setTimeout>;
 
     if (!isLoading) {
       timeout = setTimeout(() => setShowLoader(false), LOADER_DELAY);
@@ -15,7 +15,7 @@ export const useDelayedLoader = (isLoading: boolean) => {
     }
 
     return () => clearTimeout(timeout);
-  }, [isLoading, LOADER_DELAY]);
+  }, [isLoading]);
 
   return showLoader;
 };
