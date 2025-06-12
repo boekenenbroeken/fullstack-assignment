@@ -6,15 +6,8 @@ import { prisma } from '../lib/prisma';
  * @openapi
  * /api/champions:
  *   get:
- *     summary: Get world champions for specified seasons
- *     description: Returns a list of F1 world champions for the provided years. If no years are specified, defaults to 2020–2022.
- *     parameters:
- *       - in: query
- *         name: years
- *         schema:
- *           type: string
- *           example: 2020,2021
- *         description: Comma-separated list of years
+ *     summary: Get world champions
+ *     description: Returns a list of F1 world champions.
  *     responses:
  *       200:
  *         description: Successfully retrieved champion data
@@ -99,7 +92,6 @@ export const getRaces = async (req: Request<{ year: string }>, res: Response) =>
 
     if (isNaN(year)) {
       res.status(400).json({ error: 'Invalid year parameter' });
-
       return;
     }
 
