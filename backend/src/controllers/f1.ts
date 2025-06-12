@@ -92,6 +92,7 @@ export const getRaces = async (req: Request<{ year: string }>, res: Response) =>
 
     if (isNaN(year)) {
       res.status(400).json({ error: 'Invalid year parameter' });
+
       return;
     }
 

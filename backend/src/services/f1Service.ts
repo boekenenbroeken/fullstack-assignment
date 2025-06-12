@@ -1,9 +1,8 @@
 import { fetchSeasonChampion, fetchRaces } from '../clients/ergastClient';
 import { prisma } from '../lib/prisma';
-
 import { championMapper, racesMapper } from '../mappers';
-
-import { Champion, Race } from '../types/ergast';
+import { Champion, Driver, Team, Race } from '../types/ergast';
+import { SeasonWithChampion, DriverSeasonWithTeam, RaceWithWinner } from '../types/prismaModel';
 
 export const getSeasonChampion = async (year: number): Promise<Champion> => {
   const data = await fetchSeasonChampion(year);
@@ -11,30 +10,29 @@ export const getSeasonChampion = async (year: number): Promise<Champion> => {
   return championMapper(data);
 };
 
-export const getAllChampions = async () => {
-  const seasons = await prisma.season.findMany({
+export const getAllChampions = async (): Promise<Champion[]> => {
+  const seasons: SeasonWithChampion[] = await prisma.season.findMany({
     include: {
       champion: {
         include: {
           driverSeasons: {
-            include: {
-              team: true,
-            },
+            include: { team: true },
           },
         },
       },
     },
   });
 
-  return seasons.map(({ id, champion, year }) => {
-    const { driverSeasons, ...driver } = champion;
-    const team = driverSeasons.find((driverSeason) => driverSeason.seasonId === id)?.team;
+  return seasons.map((season: SeasonWithChampion) => {
+    const { id, year, champion } = season;
+    const { driverSeasons, id: driverId, name, nationality } = champion;
 
-    return {
-      season: year.toString(),
-      driver,
-      team,
-    };
+    const teamEntity = driverSeasons.find((ds: DriverSeasonWithTeam) => ds.seasonId === id)?.team;
+
+    const driver: Driver = { id: driverId, name, nationality };
+    const team: Team = { id: teamEntity?.id ?? '', name: teamEntity?.name ?? '' };
+
+    return { season: year.toString(), driver, team };
   });
 };
 
@@ -44,7 +42,7 @@ export const getRaces = async (year: number): Promise<Race[]> => {
   return racesMapper(data.MRData.RaceTable.Races);
 };
 
-export const getAllRaces = async (year: number) => {
+export const getAllRaces = async (year: number): Promise<Race[]> => {
   const season = await prisma.season.findUnique({
     where: { year },
     include: {
@@ -54,9 +52,7 @@ export const getAllRaces = async (year: number) => {
             include: {
               driverSeasons: {
                 where: { season: { year } },
-                include: {
-                  team: true,
-                },
+                include: { team: true },
               },
             },
           },
@@ -66,19 +62,18 @@ export const getAllRaces = async (year: number) => {
   });
 
   if (!season) {
-    // TODO: fix
     throw new Error(`Season ${year} not found`);
   }
 
-  return season.races.map(({ id, name, round, winner }) => ({
-    id,
-    name,
-    round,
+  return season.races.map((race: RaceWithWinner) => ({
+    id: race.id,
+    name: race.name,
+    round: race.round,
     winner: {
-      id: winner.id,
-      name: winner.name,
-      nationality: winner.nationality,
+      id: race.winner.id,
+      name: race.winner.name,
+      nationality: race.winner.nationality,
     },
-    team: winner.driverSeasons[0].team,
+    team: race.winner.driverSeasons[0].team,
   }));
 };
