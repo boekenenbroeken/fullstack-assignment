@@ -8,10 +8,12 @@ import {
   mockChampion,
   mockChampionApiResponse,
   mockPrismaDriverSeason,
+  mockPrismaSeason,
   mockRaces,
   mockSeasonFindUnique,
 } from './__mocks__/f1Service.mock';
 
+vi.mocked(prisma.season.findMany).mockResolvedValueOnce(mockPrismaSeason);
 vi.mock('../../clients/ergastClient');
 vi.mock('../../mappers');
 vi.mock('../../lib/prisma', () => ({
@@ -21,6 +23,7 @@ vi.mock('../../lib/prisma', () => ({
     },
     season: {
       findUnique: vi.fn(),
+      findMany: vi.fn(),
     },
   },
 }));

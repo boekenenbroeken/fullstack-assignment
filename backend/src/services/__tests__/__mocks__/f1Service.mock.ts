@@ -1,5 +1,4 @@
-import type { Prisma } from '@prisma/client';
-
+import type { Prisma } from '../../../generated/prisma';
 import type { Champion, ChampionApiResponse, Race } from '../../../types/ergast';
 
 export const mockPrismaDriverSeason: Prisma.DriverSeasonGetPayload<{
@@ -102,3 +101,25 @@ export const mockSeasonFindUnique = {
     },
   ],
 };
+
+export const mockPrismaSeason = [
+  {
+    id: 1,
+    year: 2021,
+    championId: 'hamilton',
+    champion: {
+      id: 'hamilton',
+      name: 'Lewis Hamilton',
+      nationality: 'British',
+      driverSeasons: [
+        {
+          seasonId: 1,
+          team: {
+            id: 'mercedes',
+            name: 'Mercedes',
+          },
+        },
+      ],
+    },
+  },
+];
