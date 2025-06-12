@@ -1,7 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { FlagIcon } from '../FlagIcon';
 import type { SVGProps } from 'react';
+import { describe, expect, it, vi } from 'vitest';
+
+import { FlagIcon } from '../FlagIcon';
 
 vi.mock('../assets/spain.svg?react', () => ({
   default: (props: SVGProps<SVGSVGElement>) => <svg data-testid="spanish-flag" {...props} />,

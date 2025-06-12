@@ -1,8 +1,5 @@
 import type { FC, SVGProps } from 'react';
 
-import SpanishFlag from './assets/spain.svg?react';
-import BritishFlag from './assets/united-kingdom.svg?react';
-import DutchFlag from './assets/netherlands.svg?react';
 import AustralianFlag from './assets/australia.svg?react';
 import BrazilianFlag from './assets/brazil.svg?react';
 import ColombianFlag from './assets/colombia.svg?react';
@@ -12,9 +9,12 @@ import GermanFlag from './assets/germany.svg?react';
 import ItalianFlag from './assets/italy.svg?react';
 import MexicanFlag from './assets/mexico.svg?react';
 import MonegasqueFlag from './assets/monaco.svg?react';
-import PolishFlag from './assets/poland.svg?react';
-import VenezuelanFlag from './assets/venezuela.svg?react';
+import DutchFlag from './assets/netherlands.svg?react';
 import Placeholder from './assets/placeholder.svg?react';
+import PolishFlag from './assets/poland.svg?react';
+import SpanishFlag from './assets/spain.svg?react';
+import BritishFlag from './assets/united-kingdom.svg?react';
+import VenezuelanFlag from './assets/venezuela.svg?react';
 
 type SVGComponent = FC<SVGProps<SVGSVGElement>>;
 

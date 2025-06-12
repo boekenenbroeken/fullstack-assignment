@@ -1,4 +1,4 @@
-import { vi, Mock } from 'vitest';
+import { Mock, vi } from 'vitest';
 
 type MockResponse = {
   ok: boolean;

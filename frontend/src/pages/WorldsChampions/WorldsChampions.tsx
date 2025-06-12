@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useChampionsStore } from 'store/champions';
-import { Card } from 'components/Card/Card';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import { Link } from 'react-router-dom';
-import { useDelayedLoader } from 'utils/useDelayedLoader';
+import { Card } from 'components/Card/Card';
 import { DataBoundary } from 'components/DataBoundary/DataBoundary';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useChampionsStore } from 'store/champions';
+import { useDelayedLoader } from 'utils/useDelayedLoader';
 
 export const WorldsChampions = () => {
   const { data = [], loading, error, hydrate } = useChampionsStore();

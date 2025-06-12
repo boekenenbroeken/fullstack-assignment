@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import type { Champion } from 'api/types/models';
 import { fetchChampions } from 'api/champions';
+import type { Champion } from 'api/types/models';
+import { create } from 'zustand';
 
 type ChampionsState = {
   data: Champion[];

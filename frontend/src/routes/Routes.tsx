@@ -1,7 +1,7 @@
-import { Routes as ReactRoutes, Route } from 'react-router-dom';
-import { WorldsChampions } from 'pages/WorldsChampions/WorldsChampions';
-import { RacesWinners } from 'pages/RacesWinners/RacesWinners';
 import { NotFound } from 'pages/NotFound/NotFound';
+import { RacesWinners } from 'pages/RacesWinners/RacesWinners';
+import { WorldsChampions } from 'pages/WorldsChampions/WorldsChampions';
+import { Route, Routes as ReactRoutes } from 'react-router-dom';
 
 export function Routes() {
   return (

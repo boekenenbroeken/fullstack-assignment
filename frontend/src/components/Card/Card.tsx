@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
-import { FlagIcon } from 'components/FlagIcon/FlagIcon';
 import clsx from 'clsx';
+import { FlagIcon } from 'components/FlagIcon/FlagIcon';
+import type { ReactNode } from 'react';
 
 type Entry = {
   readonly label: string;

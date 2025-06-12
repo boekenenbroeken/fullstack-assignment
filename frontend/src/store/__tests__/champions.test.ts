@@ -1,9 +1,9 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useChampionsStore } from 'store/champions';
+import { act } from '@testing-library/react';
 import { fetchChampions } from 'api/champions';
 import type { Champion } from 'api/types/models';
-import { act } from '@testing-library/react';
+import { useChampionsStore } from 'store/champions';
 import type { Mock } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('api/champions', () => ({
   fetchChampions: vi.fn(),

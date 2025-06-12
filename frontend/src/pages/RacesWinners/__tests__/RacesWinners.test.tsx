@@ -1,9 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { RacesWinners } from '../RacesWinners';
-import { Race, Champion } from 'api/types/models';
+import { Champion, Race } from 'api/types/models';
 import { ReactNode } from 'react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { RacesWinners } from '../RacesWinners';
 
 const hydrateRaces = vi.fn();
 const hydrateChampions = vi.fn();

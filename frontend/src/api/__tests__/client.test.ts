@@ -1,10 +1,11 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { request, BASE } from '../client';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+
+import { BASE, request } from '../client';
 import {
   mockFetch,
-  restoreFetch,
-  mockFetchSuccess,
   mockFetchFailure,
+  mockFetchSuccess,
+  restoreFetch,
 } from './__mocks__/client.mock';
 
 describe('request()', () => {

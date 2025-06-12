@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
 import { Loader } from 'components/Loader/Loader';
 import { ErrorScreen } from 'pages/ErrorScreen/ErrorScreen';
+import type { ReactNode } from 'react';
 
 type Props = {
   loading: boolean;

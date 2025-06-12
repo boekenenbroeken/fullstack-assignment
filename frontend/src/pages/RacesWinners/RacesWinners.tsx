@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useRacesStore } from 'store/races';
-import { useChampionsStore } from 'store/champions';
-import { Card } from 'components/Card/Card';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
-import { useDelayedLoader } from 'utils/useDelayedLoader';
+import { Card } from 'components/Card/Card';
 import { DataBoundary } from 'components/DataBoundary/DataBoundary';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useChampionsStore } from 'store/champions';
+import { useRacesStore } from 'store/races';
+import { useDelayedLoader } from 'utils/useDelayedLoader';
 
 export const RacesWinners = () => {
   const { season } = useParams<{ season: string }>();

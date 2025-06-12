@@ -1,9 +1,9 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useRacesStore } from 'store/races';
+import { act } from '@testing-library/react';
 import { fetchRaces } from 'api/races';
 import type { Race } from 'api/types/models';
-import { act } from '@testing-library/react';
+import { useRacesStore } from 'store/races';
 import type { Mock } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('api/races', () => ({
   fetchRaces: vi.fn(),

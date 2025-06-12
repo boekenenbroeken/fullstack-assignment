@@ -1,7 +1,8 @@
-import { describe, it, expect, vi, type Mocked } from 'vitest';
+import { describe, expect, it, type Mocked, vi } from 'vitest';
+
+import * as client from '../client';
 import { fetchRaces } from '../races';
 import type { Race } from '../types/models';
-import * as client from '../client';
 
 vi.mock('../client', () => ({
   request: vi.fn(),

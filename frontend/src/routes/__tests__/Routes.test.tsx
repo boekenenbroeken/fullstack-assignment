@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, it, vi } from 'vitest';
+
 import { Routes } from '../Routes';
 
 vi.mock('pages/WorldsChampions/WorldsChampions', () => ({
