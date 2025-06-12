@@ -14,7 +14,7 @@ export const WorldsChampions = () => {
 
   useEffect(() => {
     hydrate();
-  }, []);
+  }, [hydrate]);
 
   return (
     <DataBoundary loading={showLoader} error={error} empty={noData}>

@@ -20,7 +20,7 @@ export const useRacesStore = create<RacesState>((set) => ({
       set({ loading: true, error: false });
       const data = await fetchRaces(season);
       set({ data, loading: false });
-    } catch (e) {
+    } catch {
       set({ error: true, loading: false });
     }
   },

@@ -1,16 +1,22 @@
-import { vi } from 'vitest';
+import { vi, Mock } from 'vitest';
 
-export const mockFetchSuccess = (data: any) => {
-  (global.fetch as any).mockResolvedValueOnce({
+type MockResponse = {
+  ok: boolean;
+  json: () => Promise<unknown>;
+};
+
+export const mockFetchSuccess = <T>(data: T) => {
+  (global.fetch as unknown as Mock).mockResolvedValueOnce({
     ok: true,
     json: async () => data,
-  });
+  } as MockResponse);
 };
 
 export const mockFetchFailure = () => {
-  (global.fetch as any).mockResolvedValueOnce({
+  (global.fetch as unknown as Mock).mockResolvedValueOnce({
     ok: false,
-  });
+    json: async () => ({}),
+  } as MockResponse);
 };
 
 export const mockFetch = () => {

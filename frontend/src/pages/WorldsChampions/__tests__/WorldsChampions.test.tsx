@@ -17,19 +17,29 @@ vi.mock('store/champions', () => ({
 }));
 
 vi.mock('components/Card/Card', () => ({
-  Card: ({ driver, driverNationality, team, entries }: any) => (
+  Card: (props: {
+    driver: string;
+    driverNationality: string;
+    team: string;
+    entries: [{ label: string; value: string }];
+  }) => (
     <div data-testid="card">
-      {driver} ({driverNationality}) - {team} - {entries[0].value}
+      {props.driver} ({props.driverNationality}) - {props.team} - {props.entries[0].value}
     </div>
   ),
 }));
 
 vi.mock('components/DataBoundary/DataBoundary', () => ({
-  DataBoundary: ({ loading, error, empty, children }: any) => {
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error occurred</div>;
-    if (empty) return <div>No data</div>;
-    return children;
+  DataBoundary: (props: {
+    loading: boolean;
+    error: boolean;
+    empty: boolean;
+    children: React.ReactNode;
+  }) => {
+    if (props.loading) return <div>Loading...</div>;
+    if (props.error) return <div>Error occurred</div>;
+    if (props.empty) return <div>No data</div>;
+    return <>{props.children}</>;
   },
 }));
 
@@ -40,11 +50,11 @@ vi.mock('utils/useDelayedLoader', () => ({
 const setChampionsStore = ({
   data = [],
   loading = false,
-  error = null,
+  error = false,
 }: {
   data?: Champion[];
   loading?: boolean;
-  error?: any;
+  error?: boolean;
 }) => {
   useChampionsStore.mockReturnValue({
     data,

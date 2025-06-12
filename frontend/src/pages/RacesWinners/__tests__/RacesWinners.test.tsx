@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { RacesWinners } from '../RacesWinners';
 import { Race, Champion } from 'api/types/models';
+import { ReactNode } from 'react';
 
 const hydrateRaces = vi.fn();
 const hydrateChampions = vi.fn();
@@ -18,20 +19,42 @@ vi.mock('store/champions', () => ({
 }));
 
 vi.mock('components/Card/Card', () => ({
-  Card: ({ driver, driverNationality, team, entries, isHighlighted }: any) => (
+  Card: ({
+    driver,
+    driverNationality,
+    team,
+    entries,
+    isHighlighted,
+  }: {
+    driver: string;
+    driverNationality: string;
+    team: string;
+    entries: { label: string; value: string }[];
+    isHighlighted?: boolean;
+  }) => (
     <div data-testid="card">
-      {driver} ({driverNationality}) - {team} - {entries[0].value}
+      {driver} ({driverNationality}) - {team} - {entries[0]?.value ?? ''}
       {isHighlighted ? ' (Champion)' : ''}
     </div>
   ),
 }));
 
 vi.mock('components/DataBoundary/DataBoundary', () => ({
-  DataBoundary: ({ loading, error, empty, children }: any) => {
+  DataBoundary: ({
+    loading,
+    error,
+    empty,
+    children,
+  }: {
+    loading: boolean;
+    error: boolean;
+    empty?: boolean;
+    children: ReactNode;
+  }) => {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error occurred</div>;
     if (empty) return <div>No data</div>;
-    return children;
+    return <>{children}</>;
   },
 }));
 
@@ -39,21 +62,23 @@ vi.mock('utils/useDelayedLoader', () => ({
   useDelayedLoader: (loading: boolean) => loading,
 }));
 
+type StoreConfig = {
+  races?: Race[];
+  racesLoading?: boolean;
+  racesError?: boolean;
+  champions?: Champion[];
+  championsLoading?: boolean;
+  championsError?: boolean;
+};
+
 const setStores = ({
   races = [],
   racesLoading = false,
-  racesError = null,
+  racesError = false,
   champions = [],
   championsLoading = false,
-  championsError = null,
-}: {
-  races?: Race[];
-  racesLoading?: boolean;
-  racesError?: any;
-  champions?: Champion[];
-  championsLoading?: boolean;
-  championsError?: any;
-}) => {
+  championsError = false,
+}: StoreConfig) => {
   useRacesStore.mockReturnValue({
     data: races,
     loading: racesLoading,

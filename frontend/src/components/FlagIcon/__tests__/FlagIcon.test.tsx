@@ -1,16 +1,16 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { FlagIcon } from '../FlagIcon';
+import type { SVGProps } from 'react';
 
 vi.mock('../assets/spain.svg?react', () => ({
-  default: (props: any) => <div data-testid="spanish-flag" {...props} />,
+  default: (props: SVGProps<SVGSVGElement>) => <svg data-testid="spanish-flag" {...props} />,
 }));
 
 vi.mock('../assets/placeholder.svg?react', () => ({
-  default: (props: React.HTMLAttributes<HTMLDivElement>) => (
-    <div data-testid="placeholder-flag" {...props} />
-  ),
+  default: (props: SVGProps<SVGSVGElement>) => <svg data-testid="placeholder-flag" {...props} />,
 }));
+
 describe('FlagIcon', () => {
   it('renders correct flag icon for known nationality', () => {
     render(<FlagIcon nationality="Spanish" />);
