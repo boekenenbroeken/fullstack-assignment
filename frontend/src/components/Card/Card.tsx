@@ -26,13 +26,13 @@ export const Card = ({
   aside,
   season,
 }: Props) => {
-  const baseClasses =
-    'flex justify-between items-center w-full px-4 md:px-8 py-6 mb-4 rounded-2xl bg-white shadow transition';
-
-  const containerClasses = clsx(baseClasses, {
-    'border-2 border-yellow-400 shadow-lg shadow-yellow-200': isHighlighted,
-    'hover:shadow-2xl hover:scale-[1.02] hover:transition-transform': aside,
-  });
+  const containerClasses = clsx(
+    'flex justify-between items-center w-full px-4 md:px-8 py-6 mb-4 rounded-2xl bg-white shadow transition',
+    {
+      'border-2 border-yellow-400 shadow-lg shadow-yellow-200': isHighlighted,
+      'hover:shadow-2xl hover:scale-[1.02] hover:transition-transform': aside,
+    },
+  );
 
   const title = isHighlighted ? `${season} World Champion` : undefined;
 
@@ -48,7 +48,7 @@ export const Card = ({
 
       <div className="flex items-center gap-6">
         {entries.map(({ label, value }) => (
-          <dl key={label} className="text-right">
+          <dl key={label} className="flex flex-col text-right">
             <dt className="text-xs text-gray-400">{label}</dt>
             <dd className="text-base font-semibold">{value}</dd>
           </dl>

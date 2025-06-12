@@ -1,15 +1,13 @@
 import RacingCarIcon from './assets/racing-car.svg?react';
 import styles from './Loader.module.css';
 
-const Loader = () => (
+export const Loader = () => (
   <div className={styles.root}>
     <div className={styles.road}>
       <div className={styles.car}>
         <RacingCarIcon className={styles.icon} />
       </div>
-      <div className={styles.finish}></div>
+      <div className={styles.finish} />
     </div>
   </div>
 );
-
-export { Loader };

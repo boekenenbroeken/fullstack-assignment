@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import type { Race } from '../api';
-import { fetchRaces } from '../api';
+import type { Race } from 'api/types/models';
+import { fetchRaces } from 'api/races';
 
 type RacesState = {
   data: Race[];

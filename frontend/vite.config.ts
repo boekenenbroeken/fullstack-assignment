@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import tailwindcss from '@tailwindcss/vite';
-import path from 'path';
+import { alias } from './alias';
 
 export default defineConfig({
   plugins: [
@@ -17,13 +17,10 @@ export default defineConfig({
       '/api': 'http://localhost:8080',
     },
   },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      pages: path.resolve(__dirname, './src/pages'),
-      components: path.resolve(__dirname, './src/components'),
-      store: path.resolve(__dirname, './src/store'),
-      utils: path.resolve(__dirname, './src/utils'),
-    },
+  resolve: { alias },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/tests/setupTests.ts',
   },
 });

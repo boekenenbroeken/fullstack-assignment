@@ -25,17 +25,18 @@ export const RacesWinners = () => {
   } = useChampionsStore();
 
   useEffect(() => {
-    if (season) hydrateRaces(season);
-  }, [season, hydrateRaces]);
-
-  useEffect(() => {
-    if (!champions.length) hydrateChampions();
-  }, [champions.length, hydrateChampions]);
+    if (season) {
+      hydrateRaces(season);
+    }
+    if (!champions.length) {
+      hydrateChampions();
+    }
+  }, [season, champions.length, hydrateRaces, hydrateChampions]);
 
   const isStillLoading = (racesLoading || championsLoading) && !(racesError || championsError);
   const showLoader = useDelayedLoader(isStillLoading);
   const hasError = racesError || championsError;
-  const noData = !season || races.length === 0 || champions.length === 0;
+  const noData = !season || !races?.length || !champions?.length;
 
   return (
     <DataBoundary loading={showLoader} error={hasError} empty={noData}>
@@ -46,16 +47,16 @@ export const RacesWinners = () => {
         </Link>
 
         <h1 className="text-3xl font-semibold tracking-tight mb-10 text-center">
-          🏁 Races Winners — {season}
+          🏁 {season} Race Winners
         </h1>
         <ul className="space-y-4">
           {races.map(({ winner, team, name }) => (
-            <li key={name}>
+            <li key={`${season}-${name}`}>
               <Card
                 driver={winner.name}
                 driverNationality={winner.nationality}
                 team={team.name}
-                isHighlighted={champions.find((c) => c.season === season)?.driver.id === winner.id}
+                isHighlighted={champions.find((c) => c.season === season)?.driver?.id === winner.id}
                 entries={[{ label: 'Race', value: name }]}
               />
             </li>

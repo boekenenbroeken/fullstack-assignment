@@ -18,7 +18,23 @@ import Placeholder from './assets/placeholder.svg?react';
 
 type SVGComponent = FC<SVGProps<SVGSVGElement>>;
 
-const NATIONALITIES: Record<string, SVGComponent> = {
+type Nationality =
+  | 'spanish'
+  | 'british'
+  | 'dutch'
+  | 'australian'
+  | 'brazilian'
+  | 'colombian'
+  | 'finnish'
+  | 'french'
+  | 'german'
+  | 'italian'
+  | 'mexican'
+  | 'monegasque'
+  | 'polish'
+  | 'venezuelan';
+
+const NATIONALITIES: Record<Nationality, SVGComponent> = {
   spanish: SpanishFlag,
   british: BritishFlag,
   dutch: DutchFlag,
@@ -36,19 +52,22 @@ const NATIONALITIES: Record<string, SVGComponent> = {
 };
 
 type Props = {
-  readonly nationality: string;
+  nationality: string;
 };
 
 export const FlagIcon = ({ nationality }: Props) => {
-  const Icon = NATIONALITIES[nationality.toLowerCase()] ?? Placeholder;
+  const normalized = nationality.trim().toLowerCase();
+  const Icon = (NATIONALITIES as Record<string, SVGComponent>)[normalized] ?? Placeholder;
 
-  const ariaLabel = `${nationality} flag icon. The driver is ${nationality}.`;
+  if (!NATIONALITIES[normalized as Nationality]) {
+    console.warn(`Unknown nationality: "${nationality}"`);
+  }
 
   return (
     <div className="shrink-0 mr-2">
       <Icon
         className="w-9 h-9 rounded-full border-2 border-white shadow-sm box-content"
-        aria-label={ariaLabel}
+        aria-label={`${nationality} flag`}
         focusable="false"
       />
     </div>

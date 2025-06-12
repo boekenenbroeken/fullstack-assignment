@@ -7,18 +7,17 @@ import { useDelayedLoader } from 'utils/useDelayedLoader';
 import { DataBoundary } from 'components/DataBoundary/DataBoundary';
 
 export const WorldsChampions = () => {
-  const { data, loading, error, hydrate } = useChampionsStore();
-  const showLoader = useDelayedLoader(loading || !data?.length);
+  const { data = [], loading, error, hydrate } = useChampionsStore();
+  const isLoading = loading || !data?.length;
+  const noData = !data.length;
+  const showLoader = useDelayedLoader(isLoading);
 
   useEffect(() => {
     hydrate();
-  }, [hydrate]);
-
-  const hasError = error;
-  const noData = !data?.length;
+  }, []);
 
   return (
-    <DataBoundary loading={showLoader} error={hasError} empty={noData}>
+    <DataBoundary loading={showLoader} error={error} empty={noData}>
       <main className="p-4">
         <h1 className="text-3xl font-semibold tracking-tight mt-5 mb-10 text-center">
           🏆 F1 World Champions

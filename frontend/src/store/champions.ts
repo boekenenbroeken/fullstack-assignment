@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import type { Champion } from '../api';
-import { fetchChampions } from '../api';
+import type { Champion } from 'api/types/models';
+import { fetchChampions } from 'api/champions';
 
 type ChampionsState = {
   data: Champion[];
@@ -10,23 +10,26 @@ type ChampionsState = {
   hydrate: () => void;
 };
 
-export const useChampionsStore = create<ChampionsState>((set) => ({
+export const useChampionsStore = create<ChampionsState>((set, get) => ({
   data: [],
   loading: false,
   error: false,
 
   fetch: async () => {
+    if (get().loading) return;
+
+    set({ loading: true, error: false });
+
     try {
-      set({ loading: true, error: false });
       const data = await fetchChampions();
       set({ data, loading: false });
-    } catch (e) {
+    } catch (error) {
+      console.error('Failed to fetch champions:', error);
       set({ error: true, loading: false });
     }
   },
 
   hydrate: () => {
-    const { fetch } = useChampionsStore.getState();
-    fetch();
+    get().fetch();
   },
 }));

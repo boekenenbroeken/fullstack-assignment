@@ -19,10 +19,14 @@
 
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"]
+      "components/*": ["components/*"],
+      "store/*": ["store/*"],
+      "api/*": ["api/*"],
+      "utils/*": ["utils/*"],
+      "pages/*": ["pages/*"]
     },
 
-    "types": ["vite/client"]
+    "types": ["vite/client", "vitest", "@testing-library/jest-dom", "vitest/globals"]
   },
   "include": ["src"]
 }
