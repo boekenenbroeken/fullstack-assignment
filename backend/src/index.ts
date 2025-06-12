@@ -3,19 +3,28 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { swaggerSpec, swaggerUi } from './swagger';
 import f1Routes from './routes/f1Routes';
+import { barbieTheme } from './lib/barbieCoreSwaggerTheme';
 
 dotenv.config();
 
 export const app = express();
 const port = process.env.PORT ?? 5000;
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cors());
 app.use(express.json());
 
 app.get('/', (_req, res) => {
   res.send('F1 Champions API is running 🚀');
 });
+
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCss: barbieTheme,
+    customSiteTitle: '💖 F1 Champions API',
+  })
+);
 
 app.get('/openapi.json', (_req, res) => {
   res.setHeader('Content-Type', 'application/json');
