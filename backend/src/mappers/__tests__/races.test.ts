@@ -1,9 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import { racesMapper } from '../races';
 import {
   fullRaceData,
-  missingDriverData,
   missingCircuitNameData,
+  missingDriverData,
   undefinedCircuitData,
 } from './__mocks__/races.mock';
 

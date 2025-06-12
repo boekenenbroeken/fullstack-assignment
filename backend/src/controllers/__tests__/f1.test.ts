@@ -1,9 +1,10 @@
 import request from 'supertest';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { app } from '../../index';
-import * as f1Service from '../../services/f1Service';
 import { prisma } from '../../lib/prisma';
-import { mockChampions, mockSeasonData, mockRaces } from './__mocks__/f1.mock';
+import * as f1Service from '../../services/f1Service';
+import { mockChampions, mockRaces, mockSeasonData } from './__mocks__/f1.mock';
 
 vi.mock('../src/services/f1Service');
 vi.mock('../src/lib/prisma');

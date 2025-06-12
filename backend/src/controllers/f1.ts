@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { getAllChampions, getAllRaces } from '../services/f1Service';
+
 import { prisma } from '../lib/prisma';
+import { getAllChampions, getAllRaces } from '../services/f1Service';
 
 /**
  * @openapi

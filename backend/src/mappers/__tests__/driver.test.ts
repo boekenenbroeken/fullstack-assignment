@@ -1,8 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import { driverMapper } from '../driver';
 import {
-  mockRawDriver,
   mockIncompleteRawDriver,
+  mockRawDriver,
   mockUndefinedDriverId,
 } from './__mocks__/driver.mock';
 

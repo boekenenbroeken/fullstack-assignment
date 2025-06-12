@@ -1,13 +1,14 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as f1Service from '../f1Service';
-import { prisma } from '../../lib/prisma';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import * as ergastClient from '../../clients/ergastClient';
+import { prisma } from '../../lib/prisma';
 import { championMapper, racesMapper } from '../../mappers';
+import * as f1Service from '../f1Service';
 import {
   mockChampion,
   mockChampionApiResponse,
-  mockRaces,
   mockPrismaDriverSeason,
+  mockRaces,
   mockSeasonFindUnique,
 } from './__mocks__/f1Service.mock';
 

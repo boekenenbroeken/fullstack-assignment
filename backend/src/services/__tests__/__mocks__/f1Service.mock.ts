@@ -1,5 +1,6 @@
-import type { Champion, ChampionApiResponse, Race } from '../../../types/ergast';
 import type { Prisma } from '@prisma/client';
+
+import type { Champion, ChampionApiResponse, Race } from '../../../types/ergast';
 
 export const mockPrismaDriverSeason: Prisma.DriverSeasonGetPayload<{
   include: { season: true; driver: true; team: true };

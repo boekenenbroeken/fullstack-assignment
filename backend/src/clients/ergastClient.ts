@@ -1,7 +1,6 @@
-import { api } from './api';
 import { redis } from '../lib/redis';
-
-import { SeasonsApiResponse, ChampionApiResponse, RacesApiResponse } from '../types/ergast';
+import { ChampionApiResponse, RacesApiResponse, SeasonsApiResponse } from '../types/ergast';
+import { api } from './api';
 
 const CACHE_TTL_SECONDS = 60 * 60;
 

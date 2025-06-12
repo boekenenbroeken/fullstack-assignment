@@ -1,9 +1,10 @@
-import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { swaggerSpec, swaggerUi } from './swagger';
-import f1Routes from './routes/f1Routes';
+import express from 'express';
+
 import { barbieTheme } from './lib/barbieCoreSwaggerTheme';
+import f1Routes from './routes/f1Routes';
+import { swaggerSpec, swaggerUi } from './swagger';
 
 dotenv.config();
 
@@ -23,7 +24,7 @@ app.use(
   swaggerUi.setup(swaggerSpec, {
     customCss: barbieTheme,
     customSiteTitle: '💖 F1 Champions API',
-  })
+  }),
 );
 
 app.get('/openapi.json', (_req, res) => {

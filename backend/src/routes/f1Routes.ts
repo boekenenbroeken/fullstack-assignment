@@ -1,5 +1,6 @@
 import express from 'express';
-import { getChampions, testDB, getRaces } from '../controllers/f1';
+
+import { getChampions, getRaces, testDB } from '../controllers/f1';
 
 const router = express.Router();
 

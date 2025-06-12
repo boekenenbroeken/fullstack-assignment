@@ -1,5 +1,5 @@
-import { syncSeason } from './src/services/syncService';
 import { prisma } from './src/lib/prisma';
+import { syncSeason } from './src/services/syncService';
 
 const START_YEAR = 2005;
 const END_YEAR = new Date().getFullYear();

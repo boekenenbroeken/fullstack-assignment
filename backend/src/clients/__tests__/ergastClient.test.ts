@@ -1,12 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { fetchSeasons, fetchSeasonChampion, fetchRaces } from '../ergastClient';
-import { api } from '../api';
 import { redis } from '../../lib/redis';
+import { api } from '../api';
+import { fetchRaces, fetchSeasonChampion, fetchSeasons } from '../ergastClient';
 import {
-  mockSeasonsResponse,
   mockChampionResponse,
   mockRacesResponse,
+  mockSeasonsResponse,
 } from './__mocks__/ergastClient.mock';
 
 vi.mock('../api');
@@ -56,7 +56,7 @@ describe('ergastClient errors', () => {
     mockGet.mockRejectedValueOnce(new Error('timeout'));
 
     await expect(fetchSeasonChampion(2021)).rejects.toThrow(
-      '❌ Failed to fetch champion for year 2021'
+      '❌ Failed to fetch champion for year 2021',
     );
     expect(mockGet).toHaveBeenCalledWith('/2021/driverStandings/1.json');
   });

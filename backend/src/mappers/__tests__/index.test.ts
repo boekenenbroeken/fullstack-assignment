@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import * as mappers from '../index';
-import { driverMapper } from '../driver';
-import { racesMapper } from '../races';
 import { championMapper } from '../champions';
+import { driverMapper } from '../driver';
+import * as mappers from '../index';
+import { racesMapper } from '../races';
 
 describe('mappers index exports', () => {
   it('should export driverMapper', () => {

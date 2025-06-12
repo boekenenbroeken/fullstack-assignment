@@ -1,4 +1,4 @@
-import type { RawDriver, Driver } from '../types/ergast';
+import type { Driver, RawDriver } from '../types/ergast';
 
 export const driverMapper = (driver: RawDriver): Driver => {
   const { driverId, givenName = '', familyName = '', nationality = '' } = driver;

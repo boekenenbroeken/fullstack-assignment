@@ -1,12 +1,13 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import { championMapper } from '../champions';
 import {
-  mockChampionApiResponse,
-  brokenMissingStandingsTable,
-  brokenMissingStandingsList,
-  brokenMissingDriverStanding,
-  brokenMissingDriver,
   brokenMissingConstructor,
+  brokenMissingDriver,
+  brokenMissingDriverStanding,
+  brokenMissingStandingsList,
+  brokenMissingStandingsTable,
+  mockChampionApiResponse,
 } from './__mocks__/champions.mock';
 
 describe('championMapper', () => {
@@ -33,13 +34,13 @@ describe('championMapper', () => {
 
   it('should throw if StandingsList is missing', () => {
     expect(() => championMapper(brokenMissingStandingsList)).toThrow(
-      'Missing StandingsList for season 2021'
+      'Missing StandingsList for season 2021',
     );
   });
 
   it('should throw if DriverStanding is missing', () => {
     expect(() => championMapper(brokenMissingDriverStanding)).toThrow(
-      'Missing DriverStanding for season 2021'
+      'Missing DriverStanding for season 2021',
     );
   });
 
@@ -49,7 +50,7 @@ describe('championMapper', () => {
 
   it('should throw if Constructor is missing', () => {
     expect(() => championMapper(brokenMissingConstructor)).toThrow(
-      'Incomplete data for season 2021'
+      'Incomplete data for season 2021',
     );
   });
 });

@@ -1,5 +1,6 @@
-import { Mock, vi } from 'vitest';
 import type { PrismaClient } from '@prisma/client';
+import { Mock, vi } from 'vitest';
+
 import { Champion } from '../../../types/ergast';
 
 type DeepMockProxy<T> = {

@@ -1,8 +1,8 @@
-import { fetchSeasonChampion, fetchRaces } from '../clients/ergastClient';
+import { fetchRaces, fetchSeasonChampion } from '../clients/ergastClient';
 import { prisma } from '../lib/prisma';
 import { championMapper, racesMapper } from '../mappers';
-import { Champion, Driver, Team, Race } from '../types/ergast';
-import { SeasonWithChampion, DriverSeasonWithTeam, RaceWithWinner } from '../types/prismaModel';
+import { Champion, Driver, Race, Team } from '../types/ergast';
+import { DriverSeasonWithTeam, RaceWithWinner, SeasonWithChampion } from '../types/prismaModel';
 
 export const getSeasonChampion = async (year: number): Promise<Champion> => {
   const data = await fetchSeasonChampion(year);

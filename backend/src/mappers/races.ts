@@ -1,5 +1,5 @@
-import { driverMapper } from './driver';
 import { Race, RawRace } from '../types/ergast';
+import { driverMapper } from './driver';
 
 export const racesMapper = (races: RawRace[]): Race[] =>
   races.map((race) => {
