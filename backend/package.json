@@ -10,7 +10,8 @@
     "build": "tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest"
+    "test": "vitest",
+    "prisma:generate": "prisma generate"
   },
   "keywords": [],
   "author": "",
