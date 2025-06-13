@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Fullstack CI Pipeline
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   backend:
+    name: Backend CI
     runs-on: ubuntu-latest
 
     services:
@@ -67,14 +68,50 @@ jobs:
         run: pnpm run seed
         working-directory: backend
 
-      - name: Run lint
+      - name: Lint backend
         run: pnpm lint
         working-directory: backend
 
-      - name: Run tests
+      - name: Test backend
         run: pnpm test
         working-directory: backend
 
       - name: Build backend
         run: pnpm build
         working-directory: backend
+
+  frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install frontend dependencies
+        run: pnpm install
+        working-directory: frontend
+
+      - name: Lint frontend
+        run: pnpm lint
+        working-directory: frontend
+
+      - name: Type check frontend
+        run: pnpm run build
+        working-directory: frontend
+
+      - name: Test frontend
+        run: pnpm test
+        working-directory: frontend
+
+      - name: Build frontend (final build)
+        run: pnpm run build
+        working-directory: frontend
