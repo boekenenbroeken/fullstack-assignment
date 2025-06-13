@@ -79,7 +79,7 @@ From project root:
 - **Frontend UI:** [http://localhost:5173](http://localhost:5173)
 - **Backend API Docs (Swagger):** [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
 
-### Environment variables required
+### Environment variables required (.env in backend directory)
 
 | Key          | Value (Example)                 |
 |--------------|----------------------------------|
