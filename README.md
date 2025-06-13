@@ -42,8 +42,7 @@ The application is built using a monorepo structure and consists of:
 ```bash
 fullstack-assignment/
   backend/
-    Dockerfile            -> Render deploy Dockerfile
-    Dockerfile.local      -> Local dev Dockerfile
+    Dockerfile            -> Dockerfile
     package.json
     pnpm-lock.yaml
     prisma/               -> Prisma schema & migrations
@@ -82,6 +81,7 @@ From project root:
 |--------------|----------------------------------|
 | DATABASE_URL | postgresql://postgres:postgres@localhost:5432/f1 |
 | REDIS_URL    | redis://localhost:6379    |
+| PORT         | 3000    |
 
 ## 🧪 Testing
 
