@@ -70,6 +70,10 @@ From project root:
 ./start-all.sh
 ```
 
+## 🎥 Demo Video
+
+[Watch demo on Monosnap](https://monosnap.com/file/k1rTTf0dzm7bR6QIn4PvxdWZO8YoES)
+
 ## Access URLs
 
 - **Frontend UI:** [http://localhost:5173](http://localhost:5173)
