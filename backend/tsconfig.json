@@ -18,5 +18,12 @@
     "esm": true,
     "experimentalSpecifierResolution": "node"
   },
-  "include": ["src", "seed.ts"]
+  "include": [
+    "src",
+    "seed.ts",
+    "vitest.config.ts",
+    "types/**/*",
+    "eslint.config.ts",
+    "__tests__/**/*"
+  ]
 }
