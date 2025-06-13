@@ -36,8 +36,18 @@ export const syncSeason = async (year: number) => {
     skipDuplicates: true,
   });
 
+  const teams = [
+    { id: champion.team.id, name: champion.team.name ?? 'Unknown Team' },
+    ...races.map((race) => ({
+      id: race.team.id,
+      name: race.team.name ?? 'Unknown Team',
+    })),
+  ];
+
+  const uniqueTeams = Array.from(new Map(teams.map((team) => [team.id, team])).values());
+
   await prisma.team.createMany({
-    data: races.map((race) => race.team),
+    data: uniqueTeams,
     skipDuplicates: true,
   });
 
