@@ -59,6 +59,14 @@ jobs:
         run: pnpm prisma generate
         working-directory: backend
 
+      - name: Apply Prisma migrations
+        run: pnpm prisma migrate deploy
+        working-directory: backend
+
+      - name: Seed database
+        run: pnpm run seed
+        working-directory: backend
+
       - name: Run lint
         run: pnpm lint
         working-directory: backend
