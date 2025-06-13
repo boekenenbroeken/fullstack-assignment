@@ -7,14 +7,10 @@
     "dev": "nodemon --watch src --ext ts --exec \"node --import ./register-loader.mjs src/index.ts\"",
     "start": "node --import ./register-loader.mjs src/index.ts",
     "seed": "node --import ./register-loader.mjs seed.ts",
-    "build": "tsc",
-    "lint": "eslint . --max-warnings=0",
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage",
+    "test": "vitest",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
