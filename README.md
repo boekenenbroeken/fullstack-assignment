@@ -1,5 +1,9 @@
 # Fullstack F1 World Champions Project
 
+## 🎥 Demo Video
+
+[Watch demo on Monosnap](https://monosnap.com/file/k1rTTf0dzm7bR6QIn4PvxdWZO8YoES)
+
 ## 🚀 Project Overview
 
 This project is a fullstack web application that allows users to browse Formula 1 World Champions and their race data.
@@ -69,10 +73,6 @@ From project root:
 ```bash
 ./start-all.sh
 ```
-
-## 🎥 Demo Video
-
-[Watch demo on Monosnap](https://monosnap.com/file/k1rTTf0dzm7bR6QIn4PvxdWZO8YoES)
 
 ## Access URLs
 
